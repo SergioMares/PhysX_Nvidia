@@ -8,6 +8,8 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 
+#include "Particle.h"
+
 using namespace physx;
 
 PxDefaultAllocator		gAllocator;
@@ -25,6 +27,8 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
+Particle*				Actor		= NULL;
+
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -39,6 +43,15 @@ void initPhysics(bool interactive)
 	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(),true,gPvd);
 
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
+
+	//Initializaing Actor and give variables to it
+	Vector3
+		ActorPos(30,40,40),
+		ActorVel(0,20,-20),
+		ActorAcc(0,-10,0);
+
+
+	Actor = new Particle(ActorPos, ActorVel, ActorAcc, 0.999);
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
@@ -61,6 +74,8 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+
+	Actor->Update(t);
 }
 
 // Function to clean data
@@ -79,6 +94,9 @@ void cleanupPhysics(bool interactive)
 	transport->release();
 	
 	gFoundation->release();
+
+	//cleaning the actor from memory
+	Actor->~Particle();
 }
 
 // Function called when a key is pressed
