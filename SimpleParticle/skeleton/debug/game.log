@@ -2,4 +2,13 @@
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
            that compiler generated copy/move constructors and copy/move assignment operators are not trivial
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount'
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\skeleton\main.cpp(64,22): warning C4459: declaration of 'actorPos' hides global declaration
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\skeleton\main.cpp(41,13): message : see declaration of 'actorPos'
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\skeleton\main.cpp(65,22): warning C4459: declaration of 'actorVel' hides global declaration
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\skeleton\main.cpp(42,7): message : see declaration of 'actorVel'
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\skeleton\main.cpp(67,21): warning C4459: declaration of 'actorAcc' hides global declaration
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\skeleton\main.cpp(43,7): message : see declaration of 'actorAcc'
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\skeleton\main.cpp(70,27): warning C5219: implicit conversion from 'int' to 'float', possible loss of data
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\skeleton\main.cpp(138): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\skeleton\main.cpp(138,40): warning C4238: nonstandard extension used: class rvalue used as lvalue
   game.vcxproj -> C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\bin\gameDEBUG.exe

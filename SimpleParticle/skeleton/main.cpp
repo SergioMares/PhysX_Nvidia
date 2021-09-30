@@ -10,7 +10,10 @@
 
 #include "Particle.h"
 
+#include <iostream>
+
 using namespace physx;
+using namespace std;
 
 PxDefaultAllocator		gAllocator;
 PxDefaultErrorCallback	gErrorCallback;
@@ -28,6 +31,16 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
 Particle*				Actor		= NULL;
+PxTransform*			CamTrans	= NULL;
+
+float					camX,
+						camY,
+						camZ,
+						actorSize;
+
+Vector3					actorPos, 
+						actorVel, 
+						actorAcc;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -44,14 +57,23 @@ void initPhysics(bool interactive)
 
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
-	//Initializaing Actor and give variables to it
+	//initialize variables
+	srand(time(NULL));
+
 	Vector3
-		ActorPos(30,40,40),
-		ActorVel(0,20,-20),
-		ActorAcc(0,-10,0);
+		actorPos(30, 40, 40),
+		actorVel(0, 20, -20),
+		//actorVel(0),
+		actorAcc(0, -10, 0);
+		//actorAcc(0);
 
+	actorSize = (rand() % 10 + 1)/10.0f;
+	cout << actorSize;
 
-	Actor = new Particle(ActorPos, ActorVel, ActorAcc, 0.999);
+	Actor = new Particle(actorPos, actorVel, actorAcc, 0.999, actorSize);
+
+	//CamTrans = &GetCamera()->getTransform();
+	
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
@@ -76,6 +98,7 @@ void stepPhysics(bool interactive, double t)
 	gScene->fetchResults(true);
 
 	Actor->Update(t);
+	//cout << "camera: " << GetCamera() << endl;
 }
 
 // Function to clean data
@@ -106,8 +129,31 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-	//case 'B': break;
-	//case ' ':	break;
+	case 'B': 
+		
+		//deregister previous particle
+		Actor->~Particle();
+
+		//get cam position
+		CamTrans = &GetCamera()->getTransform();
+		actorPos.x = CamTrans->p.x;
+		actorPos.y = CamTrans->p.y;
+		actorPos.z = CamTrans->p.z;
+
+		//Add new acceleration a velocity accordingly to the camera
+		//cout << GetCamera()->getDir().z;
+		actorVel.x = GetCamera()->getDir().x*20;
+		actorVel.y = GetCamera()->getDir().y*20;
+		actorVel.z = GetCamera()->getDir().z*20;
+
+		//add acceleration
+		actorAcc.y = -10;
+		
+		//render new particle
+		Actor = new Particle(actorPos, actorVel, actorAcc, 0.999, actorSize);
+
+		break;
+	//case 'V': Actor->~Particle();	break;
 	case ' ':
 	{
 		break;
@@ -128,7 +174,7 @@ int main(int, const char*const*)
 {
 #ifndef OFFLINE_EXECUTION 
 	extern void renderLoop();
-	renderLoop();
+	renderLoop();	
 #else
 	static const PxU32 frameCount = 100;
 	initPhysics(false);
