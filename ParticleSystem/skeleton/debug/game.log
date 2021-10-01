@@ -1,0 +1,5 @@
+﻿  Particle.cpp
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
+           that compiler generated copy/move constructors and copy/move assignment operators are not trivial
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount'
+  game.vcxproj -> C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\bin\gameDEBUG.exe
