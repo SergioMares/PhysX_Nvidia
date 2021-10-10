@@ -9,6 +9,7 @@
 #include "callbacks.hpp"
 
 #include "Particle.h"
+#include "SimplePartSys.h"
 
 #include <iostream>
 
@@ -30,17 +31,22 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
-Particle*				Actor		= NULL;
-PxTransform*			CamTrans	= NULL;
+//Particle*				Actor		= NULL;
+//PxTransform*			CamTrans	= NULL;
+SimplePartSys*			Fountain	= NULL;
 
-float					camX,
-						camY,
-						camZ,
-						actorSize;
+float					actorSize;
+double					curTime;
 
+/*
 Vector3					actorPos, 
 						actorVel, 
 						actorAcc;
+
+
+Particle* tempoArr[100];
+*/
+
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -59,18 +65,35 @@ void initPhysics(bool interactive)
 
 	//initialize variables
 	srand(time(NULL));
+	curTime = 0;
 
-	Vector3
-		actorPos(30, 40, 40),
-		actorVel(0, 20, -20),
-		//actorVel(0),
-		actorAcc(0, -10, 0);
+	Vector3 sysPos(32, 40, 30);
+
+	Fountain = new SimplePartSys(sysPos, 100, 0.5, 0.1, 10);
+	
+	/*
+	for (size_t i = 0; i < 100; i++)
+	{
+		int particleH = rand() % 20 + 1;
+		int particleX = rand() % 5 + 1;
+		int particleZ = rand() % 5 + 1;
+
+		Vector3
+			actorPos(32, 40, 30),
+			actorVel(particleX, particleH, particleZ),
+			//actorVel(0),
+			actorAcc(0, -10, 0);
 		//actorAcc(0);
 
-	actorSize = (rand() % 10 + 1)/10.0f;
-	cout << actorSize;
+	//actorSize = (rand() % 10 + 1)/10.0f;
 
-	Actor = new Particle(actorPos, actorVel, actorAcc, 0.999, actorSize);
+		Actor = new Particle(actorPos, actorVel, actorAcc, 0.5, 0.1);
+		tempoArr[i] = Actor;
+
+	}
+	*/
+	
+	
 
 	//CamTrans = &GetCamera()->getTransform();
 	
@@ -96,9 +119,19 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+	curTime += t;
+	
+	Fountain->UpdateSys(t, curTime);
+	
 
-	Actor->Update(t);
-	//cout << "camera: " << GetCamera() << endl;
+	/*
+	for (size_t i = 0; i < 100; i++)
+	{
+		tempoArr[i]->Update(t);
+	}
+	*/
+	
+	//Actor->Update(t);
 }
 
 // Function to clean data
@@ -106,7 +139,6 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
 	gDispatcher->release();
@@ -114,12 +146,14 @@ void cleanupPhysics(bool interactive)
 	gPhysics->release();	
 	PxPvdTransport* transport = gPvd->getTransport();
 	gPvd->release();
-	transport->release();
-	
+	transport->release();	
 	gFoundation->release();
 
 	//cleaning the actor from memory
-	Actor->~Particle();
+	//dont forget to do this tho the array
+	//Actor->~Particle();
+	Fountain->~SimplePartSys();
+
 }
 
 // Function called when a key is pressed
@@ -129,6 +163,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
+	/*
 	case 'B': 
 		
 		//deregister previous particle
@@ -153,6 +188,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		Actor = new Particle(actorPos, actorVel, actorAcc, 0.999, actorSize);
 
 		break;
+	*/
 	//case 'V': Actor->~Particle();	break;
 	case ' ':
 	{

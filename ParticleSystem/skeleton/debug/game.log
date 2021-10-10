@@ -1,5 +1,19 @@
-﻿  Particle.cpp
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
+﻿  SimplePartSys.cpp
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
            that compiler generated copy/move constructors and copy/move assignment operators are not trivial
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount'
-  game.vcxproj -> C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\SimpleParticle\bin\gameDEBUG.exe
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount'
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\SimplePartSys.cpp(18,23): warning C4388: '<': signed/unsigned mismatch
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\SimplePartSys.cpp(34,23): warning C4388: '<': signed/unsigned mismatch
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\SimplePartSys.cpp(75,23): warning C4388: '<': signed/unsigned mismatch
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\SimplePartSys.cpp(81,15): warning C4388: '==': signed/unsigned mismatch
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\SimplePartSys.cpp(43,47): warning C4100: 'time': unreferenced formal parameter
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\SimplePartSys.cpp(36): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\SimplePartSys.cpp(34): message : index 'i' range checked by comparison on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\SimplePartSys.cpp(36): message : feeds call on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\SimplePartSys.cpp(93): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\SimplePartSys.cpp(75): message : index 'i' range checked by comparison on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\SimplePartSys.cpp(93): message : feeds call on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\SimplePartSys.cpp(78): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\SimplePartSys.cpp(75): message : index 'i' range checked by comparison on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\SimplePartSys.cpp(78): message : feeds call on this line
+  game.vcxproj -> C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\bin\gameDEBUG.exe

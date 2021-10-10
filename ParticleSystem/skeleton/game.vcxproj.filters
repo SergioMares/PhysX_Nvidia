@@ -11,6 +11,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="SimplePartSys.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -23,6 +24,7 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="SimplePartSys.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
