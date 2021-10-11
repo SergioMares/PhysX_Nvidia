@@ -5,7 +5,6 @@
 class Particle
 {
 public:
-	//Particle();
 	Particle(Vector3 Position, Vector3 Velocity, Vector3 Acceleration, double Damping, float Size, Vector4 Color);
 	~Particle();
 	void Update(double t);

@@ -1,20 +1,8 @@
 #include "Particle.h"
-/*
-Particle::Particle()
-{
-	vel = Vector3(0);
-	acc = Vector3(0);
-	damp = 0.999;
-	size = 1;
-	
-	pos = physx::PxTransform(_Position.x, _Position.y, _Position.z);
 
-	figure = new RenderItem(CreateShape(physx::PxSphereGeometry(Size)), &pos, { 0, 0, 0, 0 });
-}
-*/
 Particle::Particle(Vector3 _Position, Vector3 _Velocity, Vector3 _Acceleration, double _Damping, float _Size, Vector4 _Color)
 {
-	//header variables get constructor variables
+	//header variables get constructor variables values
 	vel = _Velocity;
 	acc = _Acceleration;
 	damp = _Damping;
@@ -28,6 +16,7 @@ Particle::Particle(Vector3 _Position, Vector3 _Velocity, Vector3 _Acceleration, 
 Particle::~Particle()
 {
 	DeregisterRenderItem(figure);
+	delete figure;
 }
 
 void Particle::Update(double t)

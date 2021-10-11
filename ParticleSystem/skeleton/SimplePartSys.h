@@ -1,21 +1,18 @@
 #pragma once
 #include "Particle.h"
-#include <vector>
-
-using namespace std;
 
 class SimplePartSys
 {
 public:
-	SimplePartSys(Vector3 EmitterPos, int PartAmount, float PartSize, float SpawnRate, int Power);
+	SimplePartSys(Vector3 EmitterPos, float PartSize, float SpawnRate, int Power);
 	~SimplePartSys();
 
-	void UpdateSys(double t, float CurrentTime);
+	void UpdateSys(double t);
 
 private: 
 	Vector3 emitter;
 	Vector4 containerColor, partColor;
-	int amount;
+	int amount = 100;
 	float rate;
 	int power;
 	
@@ -23,9 +20,7 @@ private:
 	float tempoT;
 	bool bSpawn;
 
-	Particle	*Actor = NULL, 
-				*Container = NULL;
-	Particle	*Actors[100];
-	
+	Particle	*Container = NULL;
+	Particle	*Actors[100];	
 };
 

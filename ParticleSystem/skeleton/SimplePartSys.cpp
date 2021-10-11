@@ -1,10 +1,8 @@
 #include "SimplePartSys.h"
-#include<iostream>
 
-SimplePartSys::SimplePartSys(Vector3 _EmitterPos, int _PartAmount, float _PartSize, float _SpawnRate, int _Power)
+SimplePartSys::SimplePartSys(Vector3 _EmitterPos, float _PartSize, float _SpawnRate, int _Power)
 {	
 	emitter = _EmitterPos;
-	amount = _PartAmount;
 	rate = _SpawnRate;
 	power = _Power;
 	
@@ -15,62 +13,33 @@ SimplePartSys::SimplePartSys(Vector3 _EmitterPos, int _PartAmount, float _PartSi
 	containerColor = Vector4(0, 1, 1, 1);
 	partColor = Vector4(1, 1, 0, 0);
 
+	//initialize all particles
 	for (size_t i = 0; i < amount; i++)
-	{
 		Actors[i] = new Particle(_EmitterPos, Vector3(0), Vector3(0), 0.9, _PartSize, partColor);
-	}
-
-	//Actor = new Particle(_EmitterPos, partVel, Vector3(0, -10, 0), 0.9, _PartSize, partColor);
-	Container = new Particle(emitter, Vector3(0), Vector3(0),0.9, _PartSize*2, containerColor);
 	
-	//Actors[0] = Actor;
-
-	cout << sizeof(*Actors) << endl;
+	Container = new Particle(emitter, Vector3(0), Vector3(0),0.9, _PartSize*2, containerColor);
 }
 
 SimplePartSys::~SimplePartSys()
-{
-	
+{	
 	for (size_t i = 0; i < amount; i++)
 	{
 		Actors[i]->~Particle();
+		//delete Actors[i];		
 	}
-	
-	/*Actors[0]->~Particle();
-	Actors[8]->~Particle();*/
+		
+	Container->~Particle();
+	//delete Container;
 }
 
-void SimplePartSys::UpdateSys(double t, float time)
+void SimplePartSys::UpdateSys(double t)
 {
-	/*
-	for (size_t i = 0; i < amount; i++)
-	{
-		Actors[i]->Update(t);
-
-		if (int(time) == i && counter == i)
-		{
-			cout << "just once please" << endl;
-
-			int rX = rand() % power * 2 - power;
-			int rZ = rand() % power * 2 - power;
-
-			Vector3 partVel(rX, power, rZ);
-
-			Actors[i]->setVel(partVel);
-			Actors[i]->setAcc(Vector3(0, -10, 0));
-			counter++;
-		}
-		
-	}*/
-
 	tempoT += t;
 	if (tempoT >= rate)
 	{
 		tempoT = 0;
-		bSpawn = true;		
+		bSpawn = true; //set the flag on to spawn a particle
 	}
-
-	cout << counter << endl;
 
 	for (size_t i = 0; i < amount; i++)
 	{
@@ -79,7 +48,8 @@ void SimplePartSys::UpdateSys(double t, float time)
 
 		//actor  by actor is getting a new velocity and gravity acceleration
 		if (counter == i && bSpawn)
-		{		
+		{
+			//reset the particle vectors
 			Actors[i]->setPos(emitter);
 			Actors[i]->setAcc(Vector3(0));
 			Actors[i]->setVel(Vector3(0));
@@ -89,6 +59,7 @@ void SimplePartSys::UpdateSys(double t, float time)
 
 			Vector3 partVel(rX, power, rZ);
 
+			//giving the new values
 			Actors[i]->setVel(partVel);
 			Actors[i]->setAcc(Vector3(0, -10, 0));
 			
@@ -100,19 +71,9 @@ void SimplePartSys::UpdateSys(double t, float time)
 
 	}
 
+	//start using again the already spawned particles
 	if (counter >= 100)
 	{
 		counter = 0;
-
 	}
-		
-	
-	 /*
-	Actors[0]->Update(t);
-	Actors[99]->Update(t);
-	*/
-	//Actors.begin()->Update(t);
-
-	//Actors[0].Update(t);
-	//Actor->Update(t);
 }
