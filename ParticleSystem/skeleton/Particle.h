@@ -10,6 +10,7 @@ public:
 	void Update(double t);
 
 	//getters
+	physx::PxTransform getPos();
 
 	//setters
 	void setVel(Vector3 newVel);

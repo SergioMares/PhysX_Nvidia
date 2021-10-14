@@ -11,6 +11,8 @@ Particle::Particle(Vector3 _Position, Vector3 _Velocity, Vector3 _Acceleration, 
 	pos = physx::PxTransform(_Position.x, _Position.y, _Position.z);
 
 	figure = new RenderItem(CreateShape(physx::PxSphereGeometry(_Size)), &pos, _Color);
+
+	
 }
 
 Particle::~Particle()
@@ -29,6 +31,12 @@ void Particle::Update(double t)
 
 	//MRUA
 	pos = physx::PxTransform(pos.p.x + vel.x * t, pos.p.y + vel.y * t, pos.p.z + vel.z * t);
+}
+
+//Getters
+physx::PxTransform Particle::getPos()
+{
+	return pos;
 }
 
 //Setters

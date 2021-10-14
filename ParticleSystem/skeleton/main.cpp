@@ -10,6 +10,7 @@
 
 #include "Particle.h"
 #include "SimplePartSys.h"
+#include "Fireworks.h"
 
 #include <iostream>
 
@@ -33,7 +34,10 @@ ContactReportCallback gContactReportCallback;
 
 //my variables
 SimplePartSys*			Fountain	= NULL;
-double					curTime;
+Fireworks*				FW			= NULL;
+
+float					PartSize, fwAge;
+
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -52,11 +56,15 @@ void initPhysics(bool interactive)
 
 	//initialize variables
 	srand(time(NULL));
-	curTime = 0;
+	PartSize = 0.5;
+	fwAge = 5;
 
-	Vector3 sysPos(32, 40, 30);
+	Vector3 sysPos(32, 40, 30),
+			fwPower(0, 50, 0);
 
-	Fountain = new SimplePartSys(sysPos, 0.5, 0.1, 10);
+
+	Fountain = new SimplePartSys(sysPos, PartSize, 0.1, 10);
+	FW = new Fireworks(sysPos, 0.8, PartSize, fwPower, fwAge, 1);
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
@@ -79,9 +87,9 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	curTime += t;
 	
 	Fountain->UpdateSys(t);
+	FW->UpdateSys(t);
 }
 
 // Function to clean data
@@ -101,6 +109,7 @@ void cleanupPhysics(bool interactive)
 
 	//cleaning the particle system from memory
 	Fountain->~SimplePartSys();
+	FW->~Fireworks();
 }
 
 // Function called when a key is pressed
