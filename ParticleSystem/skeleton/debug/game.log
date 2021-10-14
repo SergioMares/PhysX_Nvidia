@@ -1,14 +1,9 @@
 ﻿  Fireworks.cpp
-  main.cpp
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
-           that compiler generated copy/move constructors and copy/move assignment operators are not trivial (compiling source file Fireworks.cpp)
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount' (compiling source file Fireworks.cpp)
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
-           that compiler generated copy/move constructors and copy/move assignment operators are not trivial (compiling source file main.cpp)
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount' (compiling source file main.cpp)
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(55,23): warning C4388: '<': signed/unsigned mismatch
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(53,54): warning C4100: '_PartType': unreferenced formal parameter
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(48): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(46): message : index 'i' range checked by comparison on this line
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(48): message : feeds call on this line
+           that compiler generated copy/move constructors and copy/move assignment operators are not trivial
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount'
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(49,23): warning C4388: '<': signed/unsigned mismatch
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(42): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(40): message : index 'i' range checked by comparison on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(42): message : feeds call on this line
   game.vcxproj -> C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\bin\gameDEBUG.exe

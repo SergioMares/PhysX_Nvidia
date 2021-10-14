@@ -34,9 +34,17 @@ ContactReportCallback gContactReportCallback;
 
 //my variables
 SimplePartSys*			Fountain	= NULL;
-Fireworks*				FW			= NULL;
+
+Fireworks				*FW1		= NULL,
+						*FW2		= NULL,
+						*FW3		= NULL;
 
 float					PartSize, fwAge;
+bool					render1 = false, 
+						render2 = false, 
+						render3 = false;
+Vector3					*sysPos;
+
 
 
 // Initialize physics engine
@@ -59,12 +67,10 @@ void initPhysics(bool interactive)
 	PartSize = 0.5;
 	fwAge = 5;
 
-	Vector3 sysPos(32, 40, 30),
-			fwPower(0, 50, 0);
+	sysPos = new Vector3(32, 40, 30);
 
 
-	Fountain = new SimplePartSys(sysPos, PartSize, 0.1, 10);
-	FW = new Fireworks(sysPos, 0.8, PartSize, fwPower, fwAge, 1);
+	Fountain = new SimplePartSys(*sysPos, PartSize, 0.1, 10);	
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
@@ -88,8 +94,13 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 	
-	Fountain->UpdateSys(t);
-	FW->UpdateSys(t);
+	Fountain->UpdateSys(t);	
+	if (render1)
+		FW1->UpdateSys(t);
+	if (render2)
+		FW2->UpdateSys(t);
+	if (render3)
+		FW3->UpdateSys(t);
 }
 
 // Function to clean data
@@ -109,7 +120,11 @@ void cleanupPhysics(bool interactive)
 
 	//cleaning the particle system from memory
 	Fountain->~SimplePartSys();
-	FW->~Fireworks();
+	FW1->~Fireworks();
+	FW2->~Fireworks();
+	FW3->~Fireworks();
+
+	delete sysPos;
 }
 
 // Function called when a key is pressed
@@ -119,7 +134,31 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-		case 'B': break;
+		case '1': 
+			if (render1)
+				FW1->Clear();
+
+			FW1 = new Fireworks(*sysPos, true, 1);
+			render1 = true;			
+			break;
+
+		case '2':
+			if (render2)
+				FW2->Clear();
+
+			FW2 = new Fireworks(*sysPos, true, 2);
+			render2 = true;
+			break;
+
+		case '3':
+			if (render3)
+				FW3->Clear();
+
+			FW3 = new Fireworks(*sysPos, true, 3);
+			render3 = true;
+			break;
+
+
 		case 'V': break;
 		case ' ':
 		{
@@ -152,3 +191,7 @@ int main(int, const char*const*)
 
 	return 0;
 }
+/*
+* SymplePartSys, Particle & Firework classes made by Sergio Mares. MIT License on complete repository
+* Check this full proyect and an updated version on https://github.com/SergioMares/PhysX_Nvidia 
+*/

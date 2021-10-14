@@ -4,24 +4,28 @@
 class Fireworks
 {
 public:
-	Fireworks(Vector3 EmitterPos, double Damping, float PartSize, Vector3 Power, float Age, bool bHasPayload);
+	Fireworks(Vector3 EmitterPos, bool bHasPayload, unsigned PartType);
 	~Fireworks();
 
 	void UpdateSys(double t);
-	void spawnFireworks(const int Amount, unsigned PartType, Vector3 Origin);
+	void SpawnFireworks(const int Amount, Vector3 Origin);
+	void SetFirework();
+	void Clear();
 
 private:
 	Vector3 emitter;
 	Vector4 partColor;
 	//int amount = 100;
 	//float rate;
-	Vector3 power;
+	Vector3 vPower;
 
 	float age;
 	float tempoT;
 	bool bSpawn, bPayload;
 	float Size;
 	double damp;
+	unsigned partType;
+	int iPower;
 
 	Particle* primigenial = NULL;
 	Fireworks* NewFireworks[100];

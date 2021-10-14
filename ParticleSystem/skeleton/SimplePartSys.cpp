@@ -11,7 +11,7 @@ SimplePartSys::SimplePartSys(Vector3 _EmitterPos, float _PartSize, float _SpawnR
 	bSpawn = false;
 	
 	containerColor = Vector4(0, 1, 1, 1);
-	partColor = Vector4(1, 1, 0, 0);
+	partColor = Vector4(1, 0, 1, 0);
 
 	//initialize all particles
 	for (size_t i = 0; i < amount; i++)
