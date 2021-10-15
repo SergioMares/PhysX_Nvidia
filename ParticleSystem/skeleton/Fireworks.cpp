@@ -1,4 +1,7 @@
 #include "Fireworks.h"
+#include <iostream>
+
+using namespace std;
 
 Fireworks::Fireworks(Vector3 _EmitterPos, bool _bHasPayload, unsigned _PartType)
 {
@@ -15,11 +18,18 @@ Fireworks::Fireworks(Vector3 _EmitterPos, bool _bHasPayload, unsigned _PartType)
 
 Fireworks::~Fireworks()
 {
-
+	if (bPayload)
+	{			
+		for (size_t i = 0; i < 100; i++)
+		{
+			delete NewFireworks[i];
+		}
+	}	
 }
 
 void Fireworks::UpdateSys(double t)
 {
+	//std::cout << primigenial->getPos().p.x << endl;
 	tempoT += t;
 	if (tempoT > age && !bSpawn)
 	{
@@ -119,7 +129,16 @@ void Fireworks::SetFirework()
 void Fireworks::Clear()
 {
 	if (!bSpawn)
-		delete primigenial;	
+		if (isfinite(primigenial->getPos().p.x))
+			delete primigenial;
 
+	if (bSpawn && bPayload)
+	{
+		for (size_t i = 0; i < 100; i++)
+		{
+			if (isfinite(NewFireworks[i]->primigenial->getPos().p.x))
+				delete NewFireworks[i]->primigenial;
+		}		
+	}
 	
 }
