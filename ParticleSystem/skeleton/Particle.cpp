@@ -10,9 +10,7 @@ Particle::Particle(Vector3 _Position, Vector3 _Velocity, Vector3 _Acceleration, 
 
 	pos = physx::PxTransform(_Position.x, _Position.y, _Position.z);
 
-	figure = new RenderItem(CreateShape(physx::PxSphereGeometry(_Size)), &pos, _Color);
-
-	
+	figure = new RenderItem(CreateShape(physx::PxSphereGeometry(_Size)), &pos, _Color);	
 }
 
 Particle::~Particle()

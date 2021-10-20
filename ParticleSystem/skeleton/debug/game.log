@@ -2,17 +2,14 @@
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
            that compiler generated copy/move constructors and copy/move assignment operators are not trivial
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount'
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(59,23): warning C4388: '<': signed/unsigned mismatch
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(25): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(23): message : index 'i' range checked by comparison on this line
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(25): message : feeds call on this line
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(52): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(50): message : index 'i' range checked by comparison on this line
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(52): message : feeds call on this line
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(140): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(137): message : index 'i' range checked by comparison on this line
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(140): message : feeds call on this line
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(139): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(137): message : index 'i' range checked by comparison on this line
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(139): message : feeds call on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(53,23): warning C4388: '<': signed/unsigned mismatch
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(46): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(44): message : index 'i' range checked by comparison on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(46): message : feeds call on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(136): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(133): message : index 'i' range checked by comparison on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(136): message : feeds call on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(135): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(133): message : index 'i' range checked by comparison on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\skeleton\Fireworks.cpp(135): message : feeds call on this line
   game.vcxproj -> C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\ParticleSystem\bin\gameDEBUG.exe

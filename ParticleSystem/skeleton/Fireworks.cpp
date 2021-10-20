@@ -12,25 +12,18 @@ Fireworks::Fireworks(Vector3 _EmitterPos, bool _bHasPayload, unsigned _PartType)
 	tempoT = 0;
 	bSpawn = false;
 
-	SetFirework();
+	SetFirework();//preset the particle properties depending of their type before create them
 	primigenial = new Particle(emitter, vPower, Vector3(0, -10, 0), damp, Size * 0.7, partColor);
 }
 
 Fireworks::~Fireworks()
-{
-	if (bPayload)
-	{			
-		for (size_t i = 0; i < 100; i++)
-		{
-			delete NewFireworks[i];
-		}
-	}	
+{	
 }
 
 void Fireworks::UpdateSys(double t)
 {
-	//std::cout << primigenial->getPos().p.x << endl;
 	tempoT += t;
+	//after the primigenial 'explodes' create the new ones, if they have payload
 	if (tempoT > age && !bSpawn)
 	{
 		if (bPayload)
@@ -45,6 +38,7 @@ void Fireworks::UpdateSys(double t)
 
 	primigenial->Update(t);
 	
+	//update the new ones if they have been spawned
 	if (bPayload && bSpawn)
 	{
 		for (size_t i = 0; i < 100; i++)
@@ -64,7 +58,7 @@ void Fireworks::SpawnFireworks(int _Amount, Vector3 _Origin)
 
 void Fireworks::SetFirework()
 {
-	if (bPayload)
+	if (bPayload)//just for the first primigenial that will 'explode'
 	{
 		partColor = Vector4(1, 1, 0, 1);
 		damp = 0.8;
@@ -128,10 +122,12 @@ void Fireworks::SetFirework()
 
 void Fireworks::Clear()
 {
+	//delete the particle if it hasnt already been removed
 	if (!bSpawn)
 		if (isfinite(primigenial->getPos().p.x))
 			delete primigenial;
 
+	//delete the new ones if has payload, if they have already spawned and if doesnt have been removed
 	if (bSpawn && bPayload)
 	{
 		for (size_t i = 0; i < 100; i++)

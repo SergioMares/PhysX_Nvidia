@@ -10,13 +10,21 @@ SimplePartSys::SimplePartSys(Vector3 _EmitterPos, float _PartSize, float _SpawnR
 	tempoT = 0;
 	bSpawn = false;
 	
-	containerColor = Vector4(0, 1, 1, 1);
-	partColor = Vector4(1, 0, 1, 0);
+	containerColor = Vector4(0, 1, 1, 1);	
 
 	//initialize all particles
 	for (size_t i = 0; i < amount; i++)
+	{
+		partColor = Vector4(
+			float((rand() % 10)) / 10,
+			float((rand() % 10)) / 10,
+			float((rand() % 10)) / 10,
+			1);
+
+		//intialize without vel and acc to add them later
 		Actors[i] = new Particle(_EmitterPos, Vector3(0), Vector3(0), 0.9, _PartSize, partColor);
-	
+	}
+			
 	Container = new Particle(emitter, Vector3(0), Vector3(0),0.9, _PartSize*2, containerColor);
 }
 
@@ -33,11 +41,11 @@ SimplePartSys::~SimplePartSys()
 }
 
 void SimplePartSys::UpdateSys(double t)
-{
+{	
 	tempoT += t;
 	if (tempoT >= rate)
 	{
-		tempoT = 0;
+		tempoT = 0;//reset the timer
 		bSpawn = true; //set the flag on to spawn a particle
 	}
 
@@ -46,10 +54,10 @@ void SimplePartSys::UpdateSys(double t)
 		//all actors are updating at every frame
 		Actors[i]->Update(t);
 
-		//actor  by actor is getting a new velocity and gravity acceleration
+		//actor by actor is getting a new velocity and gravity acceleration
 		if (counter == i && bSpawn)
 		{
-			//reset the particle vectors
+			//reset the particle vectors. Usefull to reutilize the vectors already spawned
 			Actors[i]->setPos(emitter);
 			Actors[i]->setAcc(Vector3(0));
 			Actors[i]->setVel(Vector3(0));
@@ -63,7 +71,7 @@ void SimplePartSys::UpdateSys(double t)
 			Actors[i]->setVel(partVel);
 			Actors[i]->setAcc(Vector3(0, -10, 0));
 			
-			//counter to check wich actor should give the new values
+			//counter to check to wich actor should give the new values
 			counter++;
 			//to avoid give the values again
 			bSpawn = false;

@@ -39,7 +39,8 @@ Fireworks				*FW1		= NULL,
 						*FW2		= NULL,
 						*FW3		= NULL;
 
-float					PartSize, fwAge;
+float					PartSize, fwAge, spawnRate, partPower;
+
 bool					render1 = false, 
 						render2 = false, 
 						render3 = false;
@@ -66,11 +67,13 @@ void initPhysics(bool interactive)
 	srand(time(NULL));
 	PartSize = 0.5;
 	fwAge = 5;
+	spawnRate = 0.1;
+	partPower = 10;
 
+	//spawn point for both fountain & fireworks
 	sysPos = new Vector3(32, 40, 30);
 
-
-	Fountain = new SimplePartSys(*sysPos, PartSize, 0.1, 10);	
+	Fountain = new SimplePartSys(*sysPos, PartSize, spawnRate, partPower);	
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
@@ -95,6 +98,8 @@ void stepPhysics(bool interactive, double t)
 	gScene->fetchResults(true);
 	
 	Fountain->UpdateSys(t);	
+	
+	//only if a firework has been spawned, it will be updated
 	if (render1)
 		FW1->UpdateSys(t);
 	if (render2)
@@ -107,6 +112,10 @@ void stepPhysics(bool interactive, double t)
 // Add custom code to the begining of the function
 void cleanupPhysics(bool interactive)
 {
+	//cleaning the particle system and ptr from memory
+	Fountain->~SimplePartSys();
+	delete sysPos;
+
 	PX_UNUSED(interactive);
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
@@ -117,14 +126,6 @@ void cleanupPhysics(bool interactive)
 	gPvd->release();
 	transport->release();	
 	gFoundation->release();
-
-	//cleaning the particle system from memory
-	Fountain->~SimplePartSys();
-	FW1->~Fireworks();
-	FW2->~Fireworks();
-	FW3->~Fireworks();
-
-	delete sysPos;
 }
 
 // Function called when a key is pressed
@@ -135,7 +136,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	switch(toupper(key))
 	{
 		case '1': 
-			if (render1)
+			if (render1)//if has spawned before, clean it before to create a new one
 				FW1->Clear();
 
 			FW1 = new Fireworks(*sysPos, true, 1);
@@ -193,5 +194,11 @@ int main(int, const char*const*)
 }
 /*
 * SymplePartSys, Particle & Firework classes made by Sergio Mares. MIT License on complete repository
-* Check this full proyect and an updated version on https://github.com/SergioMares/PhysX_Nvidia 
+* Check this full proyect and an updated version on https://github.com/SergioMares/PhysX_Nvidia
+* 
+* further work:
+* -> make a vector of the systems created and delete them over time
+* -> make a class partSys for the fountain and fireworks
+* -> make the particle systems dinamic
+* -> use struct for the firework properties
 */
