@@ -13,6 +13,7 @@
 #include <iostream>
 #include "ParticleGravity.h"
 #include "ParticleForceRegistry.h"
+#include "ParticlesSystem.h"
 
 using namespace physx;
 using namespace std;
@@ -32,16 +33,17 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
-Particle*				Actor		= NULL;
-ParticleGravity*		gravG		= NULL;
+ParticleGravity			*gravityDown= NULL,
+						*gravityUp	= NULL;
+
 ParticleForceRegistry*	regiF		= NULL;
+ParticlesSystem*		fountaint	= NULL;
 
-float					actorSize;
-
-int						regiCount;
-
-Vector3					actorPos, 
+float					actorSize,
+						actorMass,
 						actorVel;
+
+Vector3					actorPos;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -62,21 +64,20 @@ void initPhysics(bool interactive)
 	srand(time(NULL));
 
 	Vector3
-		actorPos(30, 40, 40),
-		actorVel(0, 20, -20);
+		actorPos(30, 40, 40);
 		//actorVel(0);
 
+	actorVel = 30;
 	actorSize = 1;	
-	regiCount = 0;
+	actorMass = 10;	
 
-	Actor = new Particle(actorPos, actorVel, actorSize);
-	gravG = new ParticleGravity(Vector3(0, -10, 0));
-	regiF = new ParticleForceRegistry();	
+	fountaint	= new ParticlesSystem(actorPos, actorVel, actorSize, actorMass, 0.001, 1000);
 
-	//add generators
-	regiF->add(Actor, gravG);
-	regiCount++;
+	gravityDown	= new ParticleGravity(Vector3(0, -10, 0));
+	gravityUp	= new ParticleGravity(Vector3(0, 10, 0));
 
+	regiF		= new ParticleForceRegistry();	
+				
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
@@ -99,8 +100,8 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 
-	Actor->Update(t);
-	if (regiCount > 0)
+	fountaint->UpdateSys(t);	
+	if (regiF->countRegisters() > 0)
 		regiF->updateForces(t);
 	//gravG->updateForce(Actor, t);
 	//cout << "camera: " << GetCamera() << endl;
@@ -124,7 +125,7 @@ void cleanupPhysics(bool interactive)
 	gFoundation->release();
 
 	//cleaning the actor from memory
-	Actor->~Particle();
+	//Actor->~Particle();
 }
 
 // Function called when a key is pressed
@@ -136,8 +137,15 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	case 'B': break;
 	case 'C': 
-		regiF->clear();
-		regiCount = 0;
+		regiF->clear();	
+		break;
+	case '8': //8 is up in numbers keyboard
+		for (auto a : fountaint->getActors())
+			regiF->add(a, gravityUp);
+		break;
+	case '2': //2 is down in numbers keyboard
+		for (auto a : fountaint->getActors())
+			regiF->add(a, gravityDown);
 		break;
 	case ' ':
 	{
@@ -175,4 +183,8 @@ int main(int, const char*const*)
 * NEW IDEAS
 * magnets and metal materials
 * planets gravity
+* 
+* DOUBTS
+* why inverse mass? and uses 
+* italy hehehe 
 */

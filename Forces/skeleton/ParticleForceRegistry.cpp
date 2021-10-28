@@ -28,3 +28,8 @@ void ParticleForceRegistry::updateForces(float t)
 		it->fg->updateForce(it->particle, t);
 	}
 }
+
+int ParticleForceRegistry::countRegisters()
+{
+	return registrations.size();
+}

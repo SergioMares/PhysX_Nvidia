@@ -5,11 +5,20 @@
 class Particle
 {
 public:
-	Particle(Vector3 Position, Vector3 Velocity, float Size);
+	Particle(Vector3 Position, Vector3 Velocity, float Size, float Mass);
 	~Particle();
 	void Update(double t);
 	void clearForce();
 	void addForce(const Vector3& f);
+
+	//getters
+	physx::PxTransform getPos();
+	float getMass();
+
+	//setters
+	void setVel(Vector3 newVel);
+	void setAcc(Vector3 newAcc);
+	void setPos(Vector3 newPos);
 
 private: 
 	Vector3 vel;
@@ -17,6 +26,7 @@ private:
 	Vector3 force;
 	float size;
 	double damp;
+	float mass;
 
 	physx::PxTransform pos;
 

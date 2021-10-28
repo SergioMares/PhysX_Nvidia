@@ -14,6 +14,8 @@
     <ClCompile Include="ParticleForceGenerator.cpp" />
     <ClCompile Include="ParticleForceRegistry.cpp" />
     <ClCompile Include="ParticleGravity.cpp" />
+    <ClCompile Include="ParticlesSystem.cpp" />
+    <ClCompile Include="Wind.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -29,6 +31,8 @@
     <ClInclude Include="ParticleForceGenerator.h" />
     <ClInclude Include="ParticleForceRegistry.h" />
     <ClInclude Include="ParticleGravity.h" />
+    <ClInclude Include="ParticlesSystem.h" />
+    <ClInclude Include="Wind.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

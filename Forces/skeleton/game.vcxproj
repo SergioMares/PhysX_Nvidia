@@ -259,9 +259,11 @@
     <ClCompile Include="ParticleForceGenerator.cpp" />
     <ClCompile Include="ParticleForceRegistry.cpp" />
     <ClCompile Include="ParticleGravity.cpp" />
+    <ClCompile Include="ParticlesSystem.cpp" />
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="Wind.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="callbacks.hpp" />
@@ -270,9 +272,11 @@
     <ClInclude Include="ParticleForceGenerator.h" />
     <ClInclude Include="ParticleForceRegistry.h" />
     <ClInclude Include="ParticleGravity.h" />
+    <ClInclude Include="ParticlesSystem.h" />
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
+    <ClInclude Include="Wind.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

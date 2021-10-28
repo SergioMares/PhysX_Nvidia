@@ -2,18 +2,30 @@
 #include <iostream>
 using namespace std;
 
-Particle::Particle(Vector3 _Position, Vector3 _Velocity, float Size)
+Particle::Particle(Vector3 _Position, Vector3 _Velocity, float Size, float Mass)
 {
 	//header variables get constructor variables
 	vel = _Velocity;	
 	size = Size;
+	mass = Mass;
 
 	pos = physx::PxTransform(_Position.x, _Position.y, _Position.z);
 
 	acc = Vector3(0);
 	force = Vector3(0);
 	damp = 0.9;
-	figure = new RenderItem(CreateShape(physx::PxSphereGeometry(Size)), &pos, { 0, 0, 0, 1 });
+
+	Vector4(
+		float((rand() % 10)) / 10,
+		float((rand() % 10)) / 10,
+		float((rand() % 10)) / 10,
+		1);
+
+	figure = new RenderItem(CreateShape(physx::PxSphereGeometry(Size)), &pos, Vector4(
+		float((rand() % 10)) / 10,
+		float((rand() % 10)) / 10,
+		float((rand() % 10)) / 10,
+		1));
 }
 
 Particle::~Particle()
@@ -23,7 +35,7 @@ Particle::~Particle()
 
 void Particle::Update(double t)
 {	
-	cout << pos.p.y << endl;
+	//cout << pos.p.y << endl;
 
 	Vector3 totalAcc = acc;
 	acc = force;/////////////////////
@@ -48,4 +60,31 @@ void Particle::clearForce()
 void Particle::addForce(const Vector3& f)
 {
 	force += f;
+}
+
+//Getters
+physx::PxTransform Particle::getPos()
+{
+	return pos;
+}
+
+float Particle::getMass()
+{
+	return mass;
+}
+
+//Setters
+void Particle::setVel(Vector3 _newVel)
+{
+	vel = _newVel;
+}
+
+void Particle::setAcc(Vector3 _newAcc)
+{
+	acc = _newAcc;
+}
+
+void Particle::setPos(Vector3 _newPos)
+{
+	pos = physx::PxTransform(_newPos.x, _newPos.y, _newPos.z);
 }

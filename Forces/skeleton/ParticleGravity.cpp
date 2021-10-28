@@ -2,5 +2,7 @@
 
 void ParticleGravity::updateForce(Particle* particle, float t)
 {
-	particle->addForce(g);
+	if (1/particle->getMass() == 0) return;
+	
+	particle->addForce(g * particle->getMass());
 }

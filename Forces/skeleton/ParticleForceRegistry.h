@@ -26,5 +26,7 @@ public:
 	void clear();
 
 	void updateForces(float t);	
+
+	int countRegisters();
 };
 
