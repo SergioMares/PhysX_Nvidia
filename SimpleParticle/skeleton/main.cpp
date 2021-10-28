@@ -70,7 +70,7 @@ void initPhysics(bool interactive)
 	actorSize = (rand() % 10 + 1)/10.0f;
 	cout << actorSize;
 
-	Actor = new Particle(actorPos, actorVel, actorAcc, 0.111, actorSize);
+	Actor = new Particle(actorPos, actorVel, actorAcc, 0.9, actorSize);
 
 	//CamTrans = &GetCamera()->getTransform();
 	
