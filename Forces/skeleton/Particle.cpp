@@ -2,12 +2,12 @@
 #include <iostream>
 using namespace std;
 
-Particle::Particle(Vector3 _Position, Vector3 _Velocity, float Size, float Mass)
+Particle::Particle(Vector3 _Position, Vector3 _Velocity, float _Size, float _Mass, float _Alpha)
 {
 	//header variables get constructor variables
 	vel = _Velocity;	
-	size = Size;
-	mass = Mass;
+	size = _Size;
+	mass = _Mass;
 
 	pos = physx::PxTransform(_Position.x, _Position.y, _Position.z);
 
@@ -21,11 +21,11 @@ Particle::Particle(Vector3 _Position, Vector3 _Velocity, float Size, float Mass)
 		float((rand() % 10)) / 10,
 		1);
 
-	figure = new RenderItem(CreateShape(physx::PxSphereGeometry(Size)), &pos, Vector4(
+	figure = new RenderItem(CreateShape(physx::PxSphereGeometry(_Size)), &pos, Vector4(
 		float((rand() % 10)) / 10,
 		float((rand() % 10)) / 10,
 		float((rand() % 10)) / 10,
-		1));
+		_Alpha));
 }
 
 Particle::~Particle()

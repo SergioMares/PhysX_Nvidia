@@ -1,10 +1,11 @@
 ﻿  main.cpp
-  Wind.cpp
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Forces\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
-           that compiler generated copy/move constructors and copy/move assignment operators are not trivial (compiling source file main.cpp)
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Forces\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount' (compiling source file main.cpp)
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Forces\skeleton\ParticleForceGenerator.h(8,1): warning C5204: 'ParticleForceGenerator': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file main.cpp)
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Forces\skeleton\ParticleGravity.h(12,1): warning C5204: 'ParticleGravity': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file main.cpp)
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Forces\skeleton\main.cpp(67,22): warning C4459: declaration of 'actorPos' hides global declaration
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Forces\skeleton\main.cpp(46,13): message : see declaration of 'actorPos'
+           that compiler generated copy/move constructors and copy/move assignment operators are not trivial
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Forces\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount'
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Forces\skeleton\ParticleForceGenerator.h(8,1): warning C5204: 'ParticleForceGenerator': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Forces\skeleton\ParticleGravity.h(12,1): warning C5204: 'ParticleGravity': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Forces\skeleton\ParticleWind.h(16,1): warning C5204: 'ParticleWind': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Forces\skeleton\ParticleWind.h(11,79): warning C5038: data member 'ParticleWind::r' will be initialized after data member 'ParticleWind::pos'
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Forces\skeleton\main.cpp(90,22): warning C4459: declaration of 'fountainPos' hides global declaration
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Forces\skeleton\main.cpp(63,13): message : see declaration of 'fountainPos'
   game.vcxproj -> C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Forces\bin\gameDEBUG.exe

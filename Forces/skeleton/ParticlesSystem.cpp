@@ -22,10 +22,10 @@ ParticlesSystem::ParticlesSystem(Vector3 _EmitterPos, int _PartVel, float _PartS
 	//initialize all particles
 	for (size_t i = 0; i < amount; i++)
 	{
-		Actorss.push_back(new Particle(_EmitterPos, Vector3(0), _PartSize, 10));
+		Actorss.push_back(new Particle(_EmitterPos, Vector3(0), _PartSize, 10, 1));
 	}
 	
-	Container = new Particle(emitter, Vector3(0), _PartSize * 2, INFINITY);
+	Container = new Particle(emitter, Vector3(0), _PartSize * 2, INFINITY, 1);
 }
 
 ParticlesSystem::~ParticlesSystem()

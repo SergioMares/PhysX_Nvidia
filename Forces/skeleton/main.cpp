@@ -14,6 +14,7 @@
 #include "ParticleGravity.h"
 #include "ParticleForceRegistry.h"
 #include "ParticlesSystem.h"
+#include "ParticleWind.h"
 
 using namespace physx;
 using namespace std;
@@ -36,14 +37,35 @@ ContactReportCallback gContactReportCallback;
 ParticleGravity			*gravityDown= NULL,
 						*gravityUp	= NULL;
 
+ParticleWind			*windRight	= NULL,
+						*windLeft	= NULL,
+						*windForward= NULL, 
+						*windBackward= NULL,
+						*windUp		= NULL;
+
+
+Particle				*windVolume1	= NULL,
+						*windVolume2	= NULL,
+						*windVolume3	= NULL,
+						*windVolume4	= NULL,
+						*windVolume5	= NULL;
+
 ParticleForceRegistry*	regiF		= NULL;
 ParticlesSystem*		fountaint	= NULL;
 
 float					actorSize,
 						actorMass,
-						actorVel;
+						actorVel,
+						fountainRate,
+						fountainAmount,
+						windRadio;
 
-Vector3					actorPos;
+Vector3					fountainPos, 
+						wVolumePos1, 
+						wVolumePos2, 
+						wVolumePos3, 
+						wVolumePos4,
+						wVolumePos5;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -64,19 +86,36 @@ void initPhysics(bool interactive)
 	srand(time(NULL));
 
 	Vector3
-		actorPos(30, 40, 40);
-		//actorVel(0);
+		//actorPos(30, 40, 40);		
+		fountainPos(0, 0, 0);
+
+	wVolumePos1 = Vector3(0, 25, 0);
+	wVolumePos2 = Vector3(0, 50, 0);
+	wVolumePos3 = Vector3(0, 75, 0);
+	wVolumePos4 = Vector3(0, 100, 0);
+	wVolumePos5 = Vector3(0, 0, 0);
 
 	actorVel = 30;
 	actorSize = 1;	
 	actorMass = 10;	
+	fountainRate = 0.01;
+	fountainAmount = 1000;
+	windRadio = 20;
 
-	fountaint	= new ParticlesSystem(actorPos, actorVel, actorSize, actorMass, 0.001, 1000);
+	fountaint	= new ParticlesSystem(fountainPos, actorVel, actorSize, actorMass, fountainRate, fountainAmount);
 
 	gravityDown	= new ParticleGravity(Vector3(0, -10, 0));
 	gravityUp	= new ParticleGravity(Vector3(0, 10, 0));
 
+	windRight		= new ParticleWind(Vector3(2000, 0, 0), windRadio, wVolumePos1);
+	windLeft		= new ParticleWind(Vector3(-2000, 0, 0), windRadio, wVolumePos2);
+	windForward		= new ParticleWind(Vector3(0, 0, 2000), windRadio, wVolumePos3);
+	windBackward	= new ParticleWind(Vector3(0, 0, -2000), windRadio, wVolumePos4);
+	windUp			= new ParticleWind(Vector3(0, 4000, 0), windRadio, wVolumePos5);	
+
 	regiF		= new ParticleForceRegistry();	
+
+	
 				
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
@@ -135,9 +174,33 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-	case 'B': break;
+	case 'P': 
+		for (auto a : fountaint->getActors())
+			regiF->add(a, windRight);
+		windVolume1 = new Particle(wVolumePos1, Vector3(0), windRadio, 0, 0);
+		break;
+	case 'O':
+		for (auto a : fountaint->getActors())
+			regiF->add(a, windLeft);
+		windVolume2 = new Particle(wVolumePos2, Vector3(0), windRadio, 0, 0);
+		break;
+	case 'I':
+		for (auto a : fountaint->getActors())
+			regiF->add(a, windForward);
+		windVolume3 = new Particle(wVolumePos3, Vector3(0), windRadio, 0, 0);
+		break;
+	case 'U':
+		for (auto a : fountaint->getActors())
+			regiF->add(a, windBackward);
+		windVolume4 = new Particle(wVolumePos4, Vector3(0), windRadio, 0, 0);
+		break;
+	case 'Y':
+		for (auto a : fountaint->getActors())
+			regiF->add(a, windUp);
+		windVolume5 = new Particle(wVolumePos5, Vector3(0), windRadio, 0, 0);
+		break;
 	case 'C': 
-		regiF->clear();	
+		regiF->clear();
 		break;
 	case '8': //8 is up in numbers keyboard
 		for (auto a : fountaint->getActors())

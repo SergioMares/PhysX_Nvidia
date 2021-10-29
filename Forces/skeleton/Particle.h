@@ -5,7 +5,7 @@
 class Particle
 {
 public:
-	Particle(Vector3 Position, Vector3 Velocity, float Size, float Mass);
+	Particle(Vector3 Position, Vector3 Velocity, float Size, float Mass, float Alpha);
 	~Particle();
 	void Update(double t);
 	void clearForce();
