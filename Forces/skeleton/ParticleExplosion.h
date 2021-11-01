@@ -5,11 +5,11 @@ class ParticleExplosion : public ParticleForceGenerator
 	Vector3 e, pos;
 	float r;
 	int TNT;
-	float exlpoTime = 5.0;
-	float tempoTime = 0;
+	float exlpoTime = 100.0;
+	float tempoTime;
 
 public:
-	ParticleExplosion(int _TNT, float radius, Vector3 position) : TNT(_TNT), r(radius), pos(position) {}
+	ParticleExplosion(int _TNT, float radius, Vector3 position, float _tempoTime = 0) : TNT(_TNT), r(radius), pos(position), tempoTime(_tempoTime)  {}
 
 	virtual void updateForce(Particle* particle, float t);
 

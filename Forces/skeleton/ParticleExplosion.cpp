@@ -4,7 +4,7 @@ using namespace std;
 
 void ParticleExplosion::updateForce(Particle* particle, float t)
 {
-	tempoTime += t;
+	tempoTime += t;	
 	if (1 / particle->getMass() == 0) return;
 
 	if (isInRange(pos, particle->getPos().p))
