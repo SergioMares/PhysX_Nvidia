@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void ParticleWind::updateForce(Particle* particle, float)
+void ParticleWind::updateForce(Particle* particle, float t)
 {
 	if (1 / particle->getMass() == 0) return;
 		

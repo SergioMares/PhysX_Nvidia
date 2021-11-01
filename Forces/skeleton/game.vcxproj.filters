@@ -16,6 +16,7 @@
     <ClCompile Include="ParticleGravity.cpp" />
     <ClCompile Include="ParticlesSystem.cpp" />
     <ClCompile Include="ParticleWind.cpp" />
+    <ClCompile Include="ParticleExplosion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -33,6 +34,7 @@
     <ClInclude Include="ParticleGravity.h" />
     <ClInclude Include="ParticlesSystem.h" />
     <ClInclude Include="ParticleWind.h" />
+    <ClInclude Include="ParticleExplosion.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

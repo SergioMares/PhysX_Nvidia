@@ -12,6 +12,7 @@ void ParticleForceRegistry::remove(Particle* particle, ParticleForceGenerator* f
 		if ((*it).particle == particle && (*it).fg == fg)
 		{
 			registrations.erase(it);
+			break;
 		}
 	}		
 }

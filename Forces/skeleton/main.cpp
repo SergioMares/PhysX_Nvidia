@@ -15,6 +15,7 @@
 #include "ParticleForceRegistry.h"
 #include "ParticlesSystem.h"
 #include "ParticleWind.h"
+#include "ParticleExplosion.h"
 
 using namespace physx;
 using namespace std;
@@ -43,12 +44,15 @@ ParticleWind			*windRight	= NULL,
 						*windBackward= NULL,
 						*windUp		= NULL;
 
+ParticleExplosion		*explosion	= NULL;
+
 
 Particle				*windVolume1	= NULL,
 						*windVolume2	= NULL,
 						*windVolume3	= NULL,
 						*windVolume4	= NULL,
-						*windVolume5	= NULL;
+						*windVolume5	= NULL,
+						*exploVolume	= NULL;
 
 ParticleForceRegistry*	regiF		= NULL;
 ParticlesSystem*		fountaint	= NULL;
@@ -58,14 +62,17 @@ float					actorSize,
 						actorVel,
 						fountainRate,
 						fountainAmount,
-						windRadio;
+						windRadio,
+						explRadio,
+						TNT;
 
 Vector3					fountainPos, 
 						wVolumePos1, 
 						wVolumePos2, 
 						wVolumePos3, 
 						wVolumePos4,
-						wVolumePos5;
+						wVolumePos5,
+						exVolumePos;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -95,12 +102,16 @@ void initPhysics(bool interactive)
 	wVolumePos4 = Vector3(0, 100, 0);
 	wVolumePos5 = Vector3(0, 0, 0);
 
+	exVolumePos = Vector3(0, 20, 0);
+
 	actorVel = 30;
 	actorSize = 1;	
 	actorMass = 10;	
 	fountainRate = 0.01;
 	fountainAmount = 1000;
 	windRadio = 20;
+	explRadio = 20;
+	TNT = 10000;
 
 	fountaint	= new ParticlesSystem(fountainPos, actorVel, actorSize, actorMass, fountainRate, fountainAmount);
 
@@ -112,6 +123,8 @@ void initPhysics(bool interactive)
 	windForward		= new ParticleWind(Vector3(0, 0, 2000), windRadio, wVolumePos3);
 	windBackward	= new ParticleWind(Vector3(0, 0, -2000), windRadio, wVolumePos4);
 	windUp			= new ParticleWind(Vector3(0, 4000, 0), windRadio, wVolumePos5);	
+
+	explosion = new ParticleExplosion(TNT, explRadio, exVolumePos);
 
 	regiF		= new ParticleForceRegistry();	
 
@@ -133,7 +146,7 @@ void initPhysics(bool interactive)
 // interactive: true if the game is rendering, false if it offline
 // t: time passed since last call in milliseconds
 void stepPhysics(bool interactive, double t)
-{
+{	
 	PX_UNUSED(interactive);
 
 	gScene->simulate(t);
@@ -141,7 +154,7 @@ void stepPhysics(bool interactive, double t)
 
 	fountaint->UpdateSys(t);	
 	if (regiF->countRegisters() > 0)
-		regiF->updateForces(t);
+		regiF->updateForces(t);	
 	//gravG->updateForce(Actor, t);
 	//cout << "camera: " << GetCamera() << endl;
 }
@@ -198,6 +211,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		for (auto a : fountaint->getActors())
 			regiF->add(a, windUp);
 		windVolume5 = new Particle(wVolumePos5, Vector3(0), windRadio, 0, 0);
+		break;
+	case 'E':	
+		for (auto a : fountaint->getActors())
+			regiF->add(a, explosion);		
+		exploVolume = new Particle(exVolumePos, Vector3(0), explRadio, 0, 0);
 		break;
 	case 'C': 
 		regiF->clear();
