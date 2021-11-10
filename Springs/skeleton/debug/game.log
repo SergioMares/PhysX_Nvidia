@@ -5,4 +5,7 @@ C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\common\PhysX-3.4\PxShared\in
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\ParticleForceGenerator.h(8,1): warning C5204: 'ParticleForceGenerator': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\ParticleGravity.h(12,1): warning C5204: 'ParticleGravity': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\ParticleSpring.h(17,1): warning C5204: 'ParticleSpring': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\ParticleAnchoredSpring.h(17,1): warning C5204: 'ParticleAnchoredSpring': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\main.cpp(107): warning C4238: nonstandard extension used: class rvalue used as lvalue
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\main.cpp(107,63): warning C4238: nonstandard extension used: class rvalue used as lvalue
   game.vcxproj -> C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\bin\gameDEBUG.exe

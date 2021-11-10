@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-Particle::Particle(Vector3 _Position, Vector3 _Velocity, float _Size, float _Mass, float _Alpha)
+Particle::Particle(Vector3 _Position, Vector3 _Velocity, float _Size, float _Mass, float _Alpha, double _Damping)
 {
 	//header variables get constructor variables
 	vel = _Velocity;	
@@ -13,7 +13,7 @@ Particle::Particle(Vector3 _Position, Vector3 _Velocity, float _Size, float _Mas
 
 	acc = Vector3(0);
 	force = Vector3(0);
-	damp = 0.9;
+	damp = _Damping;
 
 	Vector4(
 		float((rand() % 10)) / 10,
@@ -87,4 +87,14 @@ void Particle::setAcc(Vector3 _newAcc)
 void Particle::setPos(Vector3 _newPos)
 {
 	pos = physx::PxTransform(_newPos.x, _newPos.y, _newPos.z);
+}
+
+void Particle::setMass(float newMass)
+{
+	mass = newMass;
+}
+
+void Particle::setDamp(double newDamp)
+{
+	damp = newDamp;
 }

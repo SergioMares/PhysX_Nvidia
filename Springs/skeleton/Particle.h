@@ -5,7 +5,7 @@
 class Particle
 {
 public:
-	Particle(Vector3 Position, Vector3 Velocity, float Size, float Mass, float Alpha);
+	Particle(Vector3 Position, Vector3 Velocity, float Size, float Mass, float Alpha, double Damping = 0.9);
 	~Particle();
 	void Update(double t);
 	void clearForce();
@@ -19,6 +19,8 @@ public:
 	void setVel(Vector3 newVel);
 	void setAcc(Vector3 newAcc);
 	void setPos(Vector3 newPos);
+	void setMass(float newMass);
+	void setDamp(double newDamp);
 
 private: 
 	Vector3 vel;

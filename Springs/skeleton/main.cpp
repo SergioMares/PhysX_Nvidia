@@ -14,6 +14,7 @@
 #include "ParticleGravity.h"
 #include "ParticleForceRegistry.h"
 #include "ParticleSpring.h"
+#include "ParticleAnchoredSpring.h"
 
 
 using namespace physx;
@@ -40,6 +41,9 @@ ParticleGravity			*gravityDown= NULL,
 ParticleSpring			*spring1	= NULL,
 						*spring2	= NULL;
 
+ParticleAnchoredSpring	*AnchorSpr1 = NULL,
+						*AnchorSpr2	= NULL;
+
 ParticleForceRegistry*	regiF		= NULL;
 
 Particle				*Particle_1 = NULL,
@@ -52,6 +56,7 @@ Vector3					PartVel,
 float					partSize1, partSize2,
 						partMass1, PartMass2,
 						rstSpring, kSpring;
+bool					bP1, bP2, bP3;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -70,24 +75,26 @@ void initPhysics(bool interactive)
 
 	//initialize variables
 	srand(time(NULL));
+	bP1 = false;
+	bP2 = false;
+	bP3 = false;
 	
 	//actorPos(30, 40, 40);		
 
 	PartVel		= Vector3(0);
 
-	rstSpring	= 10;
-	kSpring		= 2.0;
+	rstSpring	= 5.0;
+	kSpring		= 20.0;
 
 	Partpos1	= Vector3(30, 40, 40);
 	partSize1	= 1.0;
-	partMass1	= 10;
 
 	Partpos2	= Vector3(40, 40, 40);
 	partSize2	= 1.0;
-	PartMass2	= 0;
 
-	Particle_1 = new Particle(Partpos1, PartVel, partSize1, partMass1, 1);
-	Particle_2 = new Particle(Partpos2, PartVel, partSize2, PartMass2, 1);
+
+	Particle_1 = new Particle(Partpos1, PartVel, partSize1, 0, 1);
+	Particle_2 = new Particle(Partpos2, PartVel, partSize2, 0, 1);
 	
 	gravityDown	= new ParticleGravity(Vector3(0, -10, 0));
 	gravityUp	= new ParticleGravity(Vector3(0, 10, 0));
@@ -95,10 +102,10 @@ void initPhysics(bool interactive)
 	spring1 = new ParticleSpring(Particle_2, kSpring, rstSpring);
 	spring2 = new ParticleSpring(Particle_1, kSpring, rstSpring);
 
-	regiF		= new ParticleForceRegistry();	
+	AnchorSpr1 = new ParticleAnchoredSpring(&Partpos2, kSpring, rstSpring);
+	AnchorSpr2 = new ParticleAnchoredSpring(&Particle_1->getPos().p, kSpring, rstSpring);
 
-	regiF->add(Particle_1, spring1);
-	regiF->add(Particle_2, spring2);
+	regiF		= new ParticleForceRegistry();	
 				
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
@@ -153,15 +160,31 @@ void cleanupPhysics(bool interactive)
 
 void updateSpring()
 {
-	regiF->remove(Particle_1, spring1);
-	delete spring1;
-	spring1 = new ParticleSpring(Particle_2, kSpring, rstSpring);
-	regiF->add(Particle_1, spring1);
+	if (bP1)
+	{
+		regiF->remove(Particle_1, AnchorSpr1);
+		delete AnchorSpr1;		
+		AnchorSpr1 = new ParticleAnchoredSpring(&Partpos2, kSpring, rstSpring);
+		regiF->add(Particle_1, AnchorSpr1);
 
-	regiF->remove(Particle_2, spring2);
-	delete spring2;
-	spring2 = new ParticleSpring(Particle_1, kSpring, rstSpring);
-	regiF->add(Particle_2, spring2);
+		/*regiF->remove(Particle_2, AnchorSpr2);
+		delete AnchorSpr2;
+		AnchorSpr2 = new ParticleAnchoredSpring(&Particle_1->getPos().p, kSpring, rstSpring);
+		regiF->add(Particle_2, AnchorSpr2);*/
+	}
+	else if (bP2)
+	{
+		regiF->remove(Particle_1, spring1);
+		delete spring1;
+		spring1 = new ParticleSpring(Particle_2, kSpring, rstSpring);
+		regiF->add(Particle_1, spring1);
+
+		regiF->remove(Particle_2, spring2);
+		delete spring2;
+		spring2 = new ParticleSpring(Particle_1, kSpring, rstSpring);
+		regiF->add(Particle_2, spring2);
+	}
+	
 
 	cout << kSpring << endl;
 }
@@ -176,11 +199,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'C': 
 		regiF->clear();
 		break;
-	case '8': //8 is up in numbers keyboard
+	case 'U': //U stands for Up
 		regiF->add(Particle_1, gravityUp);
 		regiF->add(Particle_2, gravityUp);
 		break;
-	case '2': //2 is down in numbers keyboard		
+	case 'D': //D stands for Down	
 		regiF->add(Particle_1, gravityDown);
 		regiF->add(Particle_2, gravityDown);
 		break;
@@ -203,6 +226,48 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			kSpring -= 1.0;
 			updateSpring();
 		}
+		break;
+	case '1':
+		bP1 = true;
+		bP2 = false;
+		bP3 = false;
+
+		regiF->clear();
+		
+		Particle_1->setPos(Partpos1);
+		Particle_1->setVel(PartVel);
+		Particle_1->setMass(10);
+		Particle_1->setDamp(0.5);
+
+		Particle_2->setPos(Partpos2);
+		Particle_2->setVel(PartVel);
+		Particle_2->setMass(0);
+		//Particle_2->setDamp(0.5);
+
+		regiF->add(Particle_1, AnchorSpr1);
+		//regiF->add(Particle_2, AnchorSpr2);
+		break;
+
+	case '2':
+		bP1 = false;
+		bP2 = true;
+		bP3 = false;
+
+		regiF->clear();
+		
+		Particle_1->setPos(Partpos1);
+		Particle_1->setVel(PartVel);
+		Particle_1->setMass(10);
+		Particle_1->setDamp(0.5);
+
+		Particle_2->setPos(Partpos2);
+		Particle_2->setVel(PartVel);
+		Particle_2->setMass(10);
+		Particle_2->setDamp(0.5);
+
+		
+		regiF->add(Particle_1, spring1);
+		regiF->add(Particle_2, spring2);
 		break;
 	case ' ':
 	{
@@ -246,4 +311,8 @@ int main(int, const char*const*)
 * distance or orientation?
 * 
 * italy hehehe 
+* 
+* TO DO
+* manage the different springs with booleans and inputs
+* create a scene manager
 */
