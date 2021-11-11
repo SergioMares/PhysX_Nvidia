@@ -15,6 +15,7 @@
 #include "ParticleForceRegistry.h"
 #include "ParticleSpring.h"
 #include "ParticleAnchoredSpring.h"
+#include "ParticleBuoyancy.h"
 
 
 using namespace physx;
@@ -44,18 +45,27 @@ ParticleSpring			*spring1	= NULL,
 ParticleAnchoredSpring	*AnchorSpr1 = NULL,
 						*AnchorSpr2	= NULL;
 
-ParticleForceRegistry*	regiF		= NULL;
+ParticleBuoyancy		*Buoyancy	= NULL;
+
+ParticleForceRegistry	*regiF		= NULL;
 
 Particle				*Particle_1 = NULL,
 						*Particle_2 = NULL;
+
+RenderItem				*waterSurface;
 
 Vector3					PartVel,
 						Partpos1,
 						Partpos2;
 
-float					partSize1, partSize2,
-						partMass1, PartMass2,
-						rstSpring, kSpring;
+physx::PxTransform		Surfpos;
+
+float					partSize1,	partSize2,
+						partMass1,	PartMass2,
+						rstSpring,	kSpring,
+						wHeight,	wVolume,
+						wDepth;
+
 bool					bP1, bP2, bP3;
 
 // Initialize physics engine
@@ -86,12 +96,18 @@ void initPhysics(bool interactive)
 	rstSpring	= 5.0;
 	kSpring		= 20.0;
 
+	wHeight = 0;
+	wVolume = 0.1;
+	wDepth = 8;
+	Surfpos.p = Vector3(30, wHeight, 40);
+
+	waterSurface = new RenderItem(CreateShape(physx::PxBoxGeometry(50, 0.1, 50)), &Surfpos, { 0,1,1,0.1 });
+
 	Partpos1	= Vector3(30, 40, 40);
 	partSize1	= 1.0;
 
 	Partpos2	= Vector3(40, 40, 40);
 	partSize2	= 1.0;
-
 
 	Particle_1 = new Particle(Partpos1, PartVel, partSize1, 0, 1);
 	Particle_2 = new Particle(Partpos2, PartVel, partSize2, 0, 1);
@@ -105,7 +121,9 @@ void initPhysics(bool interactive)
 	AnchorSpr1 = new ParticleAnchoredSpring(&Partpos2, kSpring, rstSpring);
 	AnchorSpr2 = new ParticleAnchoredSpring(&Particle_1->getPos().p, kSpring, rstSpring);
 
-	regiF		= new ParticleForceRegistry();	
+	Buoyancy = new ParticleBuoyancy(wDepth, wVolume, wHeight);
+
+	regiF		= new ParticleForceRegistry();		
 				
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
@@ -130,7 +148,7 @@ void stepPhysics(bool interactive, double t)
 	gScene->fetchResults(true);
 
 	Particle_1->Update(t);
-	Particle_2->Update(t);
+	Particle_2->Update(t);	
 
 	if (regiF->countRegisters() > 0)
 		regiF->updateForces(t);	
@@ -203,7 +221,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		regiF->add(Particle_1, gravityUp);
 		regiF->add(Particle_2, gravityUp);
 		break;
-	case 'D': //D stands for Down	
+	case 'J': //gravity down
 		regiF->add(Particle_1, gravityDown);
 		regiF->add(Particle_2, gravityDown);
 		break;
@@ -268,6 +286,26 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		
 		regiF->add(Particle_1, spring1);
 		regiF->add(Particle_2, spring2);
+		break;
+	case '3':
+		bP1 = false;
+		bP2 = false;
+		bP3 = true;
+
+		regiF->clear();
+
+		Particle_1->setPos(Partpos1);
+		Particle_1->setVel(PartVel);
+		Particle_1->setMass(10);
+		Particle_1->setDamp(0.5);
+
+		Particle_2->setPos(Partpos2);
+		Particle_2->setVel(PartVel);
+		Particle_2->setMass(5);
+		Particle_2->setDamp(0.5);
+
+		regiF->add(Particle_1, Buoyancy);
+		regiF->add(Particle_2, Buoyancy);
 		break;
 	case ' ':
 	{

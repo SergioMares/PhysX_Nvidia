@@ -257,6 +257,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleAnchoredSpring.cpp" />
+    <ClCompile Include="ParticleBuoyancy.cpp" />
     <ClCompile Include="ParticleForceGenerator.cpp" />
     <ClCompile Include="ParticleForceRegistry.cpp" />
     <ClCompile Include="ParticleGravity.cpp" />
@@ -271,6 +272,7 @@
     <ClInclude Include="core.hpp" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleAnchoredSpring.h" />
+    <ClInclude Include="ParticleBuoyancy.h" />
     <ClInclude Include="ParticleForceGenerator.h" />
     <ClInclude Include="ParticleForceRegistry.h" />
     <ClInclude Include="ParticleGravity.h" />
