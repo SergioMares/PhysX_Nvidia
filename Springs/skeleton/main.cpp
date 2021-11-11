@@ -40,23 +40,35 @@ ParticleGravity			*gravityDown= NULL,
 						*gravityUp	= NULL;
 
 ParticleSpring			*spring1	= NULL,
-						*spring2	= NULL;
+						*spring2	= NULL,
 
-ParticleAnchoredSpring	*AnchorSpr1 = NULL,
-						*AnchorSpr2	= NULL;
+						*bridgeSpr1	= NULL,
+						*bridgeSpr2	= NULL,
+						*bridgeSpr3	= NULL,
+						*bridgeSpr4	= NULL;
+
+ParticleAnchoredSpring	*AnchorSpr = NULL,
+						*bridgeAnch1 = NULL,
+						*bridgeAnch2 = NULL;
 
 ParticleBuoyancy		*Buoyancy	= NULL;
+
+
 
 ParticleForceRegistry	*regiF		= NULL;
 
 Particle				*Particle_1 = NULL,
-						*Particle_2 = NULL;
+						*Particle_2 = NULL,
+						*Particle_3 = NULL,
+						*Particle_4 = NULL,
+						*Particle_5 = NULL;
 
 RenderItem				*waterSurface;
 
 Vector3					PartVel,
 						Partpos1,
-						Partpos2;
+						Partpos2,
+						PartPos5;
 
 physx::PxTransform		Surfpos;
 
@@ -93,8 +105,8 @@ void initPhysics(bool interactive)
 
 	PartVel		= Vector3(0);
 
-	rstSpring	= 5.0;
-	kSpring		= 20.0;
+	rstSpring	= 5.0; //bridge to 1
+	kSpring		= 20.0;//bridge to +50
 
 	wHeight = 0;
 	wVolume = 0.1;
@@ -109,8 +121,13 @@ void initPhysics(bool interactive)
 	Partpos2	= Vector3(40, 40, 40);
 	partSize2	= 1.0;
 
+	PartPos5 = Vector3(70, 40, 40);
+
 	Particle_1 = new Particle(Partpos1, PartVel, partSize1, 0, 1);
 	Particle_2 = new Particle(Partpos2, PartVel, partSize2, 0, 1);
+	Particle_3 = new Particle(Vector3(0), PartVel, partSize2, 0, 1);
+	Particle_4 = new Particle(Vector3(0), PartVel, partSize2, 0, 1);
+	Particle_5 = new Particle(Vector3(0), PartVel, partSize2, 0, 1);
 	
 	gravityDown	= new ParticleGravity(Vector3(0, -10, 0));
 	gravityUp	= new ParticleGravity(Vector3(0, 10, 0));
@@ -118,8 +135,20 @@ void initPhysics(bool interactive)
 	spring1 = new ParticleSpring(Particle_2, kSpring, rstSpring);
 	spring2 = new ParticleSpring(Particle_1, kSpring, rstSpring);
 
-	AnchorSpr1 = new ParticleAnchoredSpring(&Partpos2, kSpring, rstSpring);
-	AnchorSpr2 = new ParticleAnchoredSpring(&Particle_1->getPos().p, kSpring, rstSpring);
+	bridgeSpr1 = new ParticleSpring(Particle_3, kSpring, rstSpring);
+	bridgeSpr2 = new ParticleSpring(Particle_2, kSpring, rstSpring);
+	bridgeSpr3 = new ParticleSpring(Particle_4, kSpring, rstSpring);
+	bridgeSpr4 = new ParticleSpring(Particle_3, kSpring, rstSpring);
+
+	AnchorSpr = new ParticleAnchoredSpring(&Partpos2, kSpring, rstSpring);
+	
+	bridgeAnch1 = new ParticleAnchoredSpring(&Partpos1, kSpring, rstSpring);
+	bridgeAnch2 = new ParticleAnchoredSpring(&PartPos5, kSpring, rstSpring);
+
+	puts("to see the differet examples, press 1, 2, 3 & 4 numbers");
+	puts("you can add gravity by pressing the U (gravity up) and J (gravity down) keys");
+	puts("press the G key to remove gravity");
+	puts("you can also press the '+' and '-' to modify the spring tension");
 
 	Buoyancy = new ParticleBuoyancy(wDepth, wVolume, wHeight);
 
@@ -148,7 +177,10 @@ void stepPhysics(bool interactive, double t)
 	gScene->fetchResults(true);
 
 	Particle_1->Update(t);
-	Particle_2->Update(t);	
+	Particle_2->Update(t);
+	Particle_3->Update(t);
+	Particle_4->Update(t);
+	Particle_5->Update(t);
 
 	if (regiF->countRegisters() > 0)
 		regiF->updateForces(t);	
@@ -173,17 +205,30 @@ void cleanupPhysics(bool interactive)
 	
 	gFoundation->release();
 
-	//cleaning the actor from memory
+	delete waterSurface;
+	delete Particle_1;
+	delete Particle_2;
+	delete Particle_3;
+	delete Particle_4;
+	delete Particle_5;
+	delete gravityDown;
+	delete gravityUp;
+	delete AnchorSpr;
+	
+	delete Buoyancy;
+	delete spring1;
+	delete spring2;
+	delete regiF;
 }
 
 void updateSpring()
 {
 	if (bP1)
 	{
-		regiF->remove(Particle_1, AnchorSpr1);
-		delete AnchorSpr1;		
-		AnchorSpr1 = new ParticleAnchoredSpring(&Partpos2, kSpring, rstSpring);
-		regiF->add(Particle_1, AnchorSpr1);
+		regiF->remove(Particle_1, AnchorSpr);
+		delete AnchorSpr;		
+		AnchorSpr = new ParticleAnchoredSpring(&Partpos2, kSpring, rstSpring);
+		regiF->add(Particle_1, AnchorSpr);
 
 		/*regiF->remove(Particle_2, AnchorSpr2);
 		delete AnchorSpr2;
@@ -201,6 +246,36 @@ void updateSpring()
 		delete spring2;
 		spring2 = new ParticleSpring(Particle_1, kSpring, rstSpring);
 		regiF->add(Particle_2, spring2);
+	}
+	else if (bP3)
+	{
+		regiF->remove(Particle_2, bridgeAnch1);
+		regiF->remove(Particle_2, bridgeSpr1);
+		regiF->remove(Particle_3, bridgeSpr2);
+		regiF->remove(Particle_3, bridgeSpr3);
+		regiF->remove(Particle_4, bridgeSpr4);
+		regiF->remove(Particle_4, bridgeAnch2);
+		
+		delete bridgeAnch1;
+		delete bridgeAnch2;
+		delete bridgeSpr1;
+		delete bridgeSpr2;
+		delete bridgeSpr3;
+		delete bridgeSpr4;		
+
+		bridgeAnch1 = new ParticleAnchoredSpring(&Partpos1, kSpring, rstSpring);
+		bridgeAnch2 = new ParticleAnchoredSpring(&PartPos5, kSpring, rstSpring);
+		bridgeSpr1 = new ParticleSpring(Particle_3, kSpring, rstSpring);
+		bridgeSpr2 = new ParticleSpring(Particle_2, kSpring, rstSpring);
+		bridgeSpr3 = new ParticleSpring(Particle_4, kSpring, rstSpring);
+		bridgeSpr4 = new ParticleSpring(Particle_3, kSpring, rstSpring);
+
+		regiF->add(Particle_2, bridgeAnch1);
+		regiF->add(Particle_2, bridgeSpr1);
+		regiF->add(Particle_3, bridgeSpr2);
+		regiF->add(Particle_3, bridgeSpr3);
+		regiF->add(Particle_4, bridgeSpr4);
+		regiF->add(Particle_4, bridgeAnch2);
 	}
 	
 
@@ -220,17 +295,29 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'U': //U stands for Up
 		regiF->add(Particle_1, gravityUp);
 		regiF->add(Particle_2, gravityUp);
+		regiF->add(Particle_3, gravityUp);
+		regiF->add(Particle_4, gravityUp);
+		regiF->add(Particle_5, gravityUp);
 		break;
 	case 'J': //gravity down
 		regiF->add(Particle_1, gravityDown);
 		regiF->add(Particle_2, gravityDown);
+		regiF->add(Particle_3, gravityDown);
+		regiF->add(Particle_4, gravityDown);
+		regiF->add(Particle_5, gravityDown);
 		break;
 	case 'G':
 		regiF->remove(Particle_1, gravityDown);
 		regiF->remove(Particle_2, gravityDown);
+		regiF->remove(Particle_3, gravityDown);
+		regiF->remove(Particle_4, gravityDown);
+		regiF->remove(Particle_5, gravityDown);
 
 		regiF->remove(Particle_1, gravityUp);
 		regiF->remove(Particle_2, gravityUp);
+		regiF->remove(Particle_3, gravityUp);
+		regiF->remove(Particle_4, gravityUp);
+		regiF->remove(Particle_5, gravityUp);
 		break;
 	case '+':
 	{
@@ -262,7 +349,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		Particle_2->setMass(0);
 		//Particle_2->setDamp(0.5);
 
-		regiF->add(Particle_1, AnchorSpr1);
+		regiF->add(Particle_1, AnchorSpr);
 		//regiF->add(Particle_2, AnchorSpr2);
 		break;
 
@@ -290,7 +377,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case '3':
 		bP1 = false;
 		bP2 = false;
-		bP3 = true;
+		bP3 = false;
 
 		regiF->clear();
 
@@ -306,6 +393,46 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 		regiF->add(Particle_1, Buoyancy);
 		regiF->add(Particle_2, Buoyancy);
+		break;
+	case '4':
+		bP1 = false;
+		bP2 = false;
+		bP3 = true;
+
+		regiF->clear();
+
+		Particle_1->setPos(Vector3(30, 40, 40));
+		Particle_1->setVel(PartVel);
+		Particle_1->setMass(0);
+		Particle_1->setDamp(0.5);
+
+		Particle_2->setPos(Vector3(40, 40, 40));
+		Particle_2->setVel(PartVel);
+		Particle_2->setMass(10);
+		Particle_2->setDamp(0.5);
+
+		Particle_3->setPos(Vector3(50, 40, 40));
+		Particle_3->setVel(PartVel);
+		Particle_3->setMass(10);
+		Particle_3->setDamp(0.5);
+
+		Particle_4->setPos(Vector3(60, 40, 40));
+		Particle_4->setVel(PartVel);
+		Particle_4->setMass(10);
+		Particle_4->setDamp(0.5);
+
+		Particle_5->setPos(PartPos5);
+		Particle_5->setVel(PartVel);
+		Particle_5->setMass(0);
+		Particle_5->setDamp(0.5);
+
+		regiF->add(Particle_2, bridgeAnch1);
+		regiF->add(Particle_2, bridgeSpr1);
+		regiF->add(Particle_3, bridgeSpr2);
+		regiF->add(Particle_3, bridgeSpr3);
+		regiF->add(Particle_4, bridgeSpr4);
+		regiF->add(Particle_4, bridgeAnch2);
+
 		break;
 	case ' ':
 	{
