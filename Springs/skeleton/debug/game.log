@@ -1,1 +1,10 @@
-﻿
+﻿  main.cpp
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
+           that compiler generated copy/move constructors and copy/move assignment operators are not trivial
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount'
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\ParticleForceGenerator.h(8,1): warning C5204: 'ParticleForceGenerator': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\ParticleGravity.h(12,1): warning C5204: 'ParticleGravity': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\ParticleSpring.h(17,1): warning C5204: 'ParticleSpring': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\ParticleAnchoredSpring.h(17,1): warning C5204: 'ParticleAnchoredSpring': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\ParticleBuoyancy.h(21,1): warning C5204: 'ParticleBuoyancy': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+  game.vcxproj -> C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\bin\gameDEBUG.exe

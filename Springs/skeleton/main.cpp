@@ -105,7 +105,7 @@ void initPhysics(bool interactive)
 
 	PartVel		= Vector3(0);
 
-	rstSpring	= 5.0; //bridge to 1
+	rstSpring	= 1.0; //bridge to 1
 	kSpring		= 20.0;//bridge to +50
 
 	wHeight = 0;
@@ -150,7 +150,7 @@ void initPhysics(bool interactive)
 	puts("press the G key to remove gravity");
 	puts("you can also press the '+' and '-' to modify the spring tension");
 
-	Buoyancy = new ParticleBuoyancy(wDepth, wVolume, wHeight);
+	Buoyancy = new ParticleBuoyancy(wDepth, wVolume, wHeight, 1000.0);
 
 	regiF		= new ParticleForceRegistry();		
 				

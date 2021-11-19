@@ -57,7 +57,7 @@ void Particle::clearForce()
 	force = Vector3(0);		
 }
 
-void Particle::addForce(const Vector3& f)
+void Particle::addForce(const Vector3& f)//sumar fuerzas, no aceleraciones
 {
 	force += f;
 }

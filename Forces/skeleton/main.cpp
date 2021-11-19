@@ -268,4 +268,6 @@ int main(int, const char*const*)
 * DOUBTS
 * why inverse mass? and uses 
 * italy hehehe 
+* 
+* corregir masa y fuerza
 */

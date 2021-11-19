@@ -1,0 +1,77 @@
+﻿  Particle.cpp
+  ParticleAnchoredSpring.cpp
+  ParticleBuoyancy.cpp
+  ParticleForceGenerator.cpp
+  ParticleForceRegistry.cpp
+  ParticleGravity.cpp
+  ParticleSpring.cpp
+  ParticlesSystem.cpp
+  main.cpp
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
+           that compiler generated copy/move constructors and copy/move assignment operators are not trivial (compiling source file main.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount' (compiling source file main.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
+           that compiler generated copy/move constructors and copy/move assignment operators are not trivial (compiling source file Particle.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount' (compiling source file Particle.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
+           that compiler generated copy/move constructors and copy/move assignment operators are not trivial (compiling source file ParticleGravity.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount' (compiling source file ParticleGravity.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
+           that compiler generated copy/move constructors and copy/move assignment operators are not trivial (compiling source file ParticleForceGenerator.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount' (compiling source file ParticleForceGenerator.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
+           that compiler generated copy/move constructors and copy/move assignment operators are not trivial (compiling source file ParticleForceRegistry.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount' (compiling source file ParticleForceRegistry.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
+           that compiler generated copy/move constructors and copy/move assignment operators are not trivial (compiling source file ParticleSpring.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount' (compiling source file ParticleSpring.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
+           that compiler generated copy/move constructors and copy/move assignment operators are not trivial (compiling source file ParticleBuoyancy.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount' (compiling source file ParticleBuoyancy.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
+           that compiler generated copy/move constructors and copy/move assignment operators are not trivial (compiling source file ParticleAnchoredSpring.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount' (compiling source file ParticleAnchoredSpring.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
+           that compiler generated copy/move constructors and copy/move assignment operators are not trivial (compiling source file ParticlesSystem.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount' (compiling source file ParticlesSystem.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleForceGenerator.h(8,1): warning C5204: 'ParticleForceGenerator': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ParticleForceGenerator.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleForceGenerator.h(8,1): warning C5204: 'ParticleForceGenerator': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ParticleGravity.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleForceGenerator.h(8,1): warning C5204: 'ParticleForceGenerator': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ParticleBuoyancy.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleGravity.h(12,1): warning C5204: 'ParticleGravity': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ParticleGravity.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleBuoyancy.h(21,1): warning C5204: 'ParticleBuoyancy': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ParticleBuoyancy.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleGravity.cpp(3,61): warning C4100: 't': unreferenced formal parameter
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleBuoyancy.cpp(3,55): warning C4100: 't': unreferenced formal parameter
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleForceGenerator.h(8,1): warning C5204: 'ParticleForceGenerator': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ParticleForceRegistry.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleForceRegistry.cpp(35,29): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleForceGenerator.h(8,1): warning C5204: 'ParticleForceGenerator': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ParticleAnchoredSpring.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleAnchoredSpring.h(17,1): warning C5204: 'ParticleAnchoredSpring': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ParticleAnchoredSpring.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleAnchoredSpring.cpp(3,68): warning C4100: 't': unreferenced formal parameter
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleForceGenerator.h(8,1): warning C5204: 'ParticleForceGenerator': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ParticleSpring.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleSpring.h(17,1): warning C5204: 'ParticleSpring': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ParticleSpring.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleSpring.cpp(3,60): warning C4100: 't': unreferenced formal parameter
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\foundation\PxVec3.h(303): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\foundation\PxVec3.h(302): message : index 'm' range checked by comparison on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\foundation\PxVec3.h(303): message : feeds call on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\foundation\PxVec3.h(303): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\foundation\PxVec3.h(302): message : index 'm' range checked by comparison on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\foundation\PxVec3.h(303): message : feeds call on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleForceGenerator.h(8,1): warning C5204: 'ParticleForceGenerator': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file main.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleGravity.h(12,1): warning C5204: 'ParticleGravity': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file main.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleSpring.h(17,1): warning C5204: 'ParticleSpring': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file main.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleAnchoredSpring.h(17,1): warning C5204: 'ParticleAnchoredSpring': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file main.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleBuoyancy.h(21,1): warning C5204: 'ParticleBuoyancy': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file main.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\main.cpp(71,14): warning C4189: 'item': local variable is initialized but not referenced
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\main.cpp(77,14): warning C4189: 'item2': local variable is initialized but not referenced
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticlesSystem.cpp(23,23): warning C4388: '<': signed/unsigned mismatch
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticlesSystem.cpp(33,23): warning C4388: '<': signed/unsigned mismatch
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticlesSystem.cpp(52,23): warning C4388: '<': signed/unsigned mismatch
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticlesSystem.cpp(58,15): warning C4388: '==': signed/unsigned mismatch
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticlesSystem.cpp(69,30): warning C4458: declaration of 'partVel' hides class member
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticlesSystem.h(16,6): message : see declaration of 'ParticlesSystem::partVel' (compiling source file ParticlesSystem.cpp)
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticlesSystem.cpp(72): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticlesSystem.cpp(52): message : index 'i' range checked by comparison on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticlesSystem.cpp(72): message : feeds call on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticlesSystem.cpp(55): warning C5045: Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticlesSystem.cpp(52): message : index 'i' range checked by comparison on this line
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticlesSystem.cpp(55): message : feeds call on this line
+  game.vcxproj -> C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\bin\gameDEBUG.exe
