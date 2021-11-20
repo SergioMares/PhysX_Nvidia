@@ -18,6 +18,7 @@
     <ClCompile Include="ParticleSpring.cpp" />
     <ClCompile Include="ParticleAnchoredSpring.cpp" />
     <ClCompile Include="ParticleBuoyancy.cpp" />
+    <ClCompile Include="RBGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="ParticleSpring.h" />
     <ClInclude Include="ParticleAnchoredSpring.h" />
     <ClInclude Include="ParticleBuoyancy.h" />
+    <ClInclude Include="RBGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

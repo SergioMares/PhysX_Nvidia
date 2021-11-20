@@ -16,6 +16,7 @@
 #include "ParticleSpring.h"
 #include "ParticleAnchoredSpring.h"
 #include "ParticleBuoyancy.h"
+#include "RBGenerator.h"
 
 
 using namespace physx;
@@ -35,6 +36,8 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
+
+RBGenerator* Rbodies = NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -70,19 +73,8 @@ void initPhysics(bool interactive)
 	gScene->addActor(*ground);
 	RenderItem* item = new RenderItem(plane, ground, { 0.6,0.2,1,1 });
 
-	PxShape* sphere = CreateShape(PxSphereGeometry(1));
-	PxRigidDynamic* ball = gPhysics->createRigidDynamic({ 0,50,0 });
-	ball->attachShape(*sphere);
-	gScene->addActor(*ball);
-	RenderItem* item2 = new RenderItem(sphere, ball, { 0,0,0,1 });	
+	Rbodies = new RBGenerator(gPhysics, gScene);
 	
-	ball->setLinearVelocity({0,25,0});
-	ball->addForce({ 0,100,0 });
-	ball->setAngularVelocity({ 0,0,100 });
-	ball->setMass(100);
-	
-
-	PxRigidBodyExt::updateMassAndInertia(*ball, 1);
 }
 
 
@@ -95,6 +87,8 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+
+	Rbodies->update(t);
 }
 
 // Function to clean data
