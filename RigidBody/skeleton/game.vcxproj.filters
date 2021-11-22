@@ -18,7 +18,9 @@
     <ClCompile Include="ParticleSpring.cpp" />
     <ClCompile Include="ParticleAnchoredSpring.cpp" />
     <ClCompile Include="ParticleBuoyancy.cpp" />
-    <ClCompile Include="RBGenerator.cpp" />
+    <ClCompile Include="BodySystem.cpp" />
+    <ClCompile Include="BodyForceGenerator.cpp" />
+    <ClCompile Include="BodyWind.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -38,7 +40,9 @@
     <ClInclude Include="ParticleSpring.h" />
     <ClInclude Include="ParticleAnchoredSpring.h" />
     <ClInclude Include="ParticleBuoyancy.h" />
-    <ClInclude Include="RBGenerator.h" />
+    <ClInclude Include="BodySystem.h" />
+    <ClInclude Include="BodyForceGenerator.h" />
+    <ClInclude Include="BodyWind.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

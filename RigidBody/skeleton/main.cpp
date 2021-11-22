@@ -16,7 +16,9 @@
 #include "ParticleSpring.h"
 #include "ParticleAnchoredSpring.h"
 #include "ParticleBuoyancy.h"
-#include "RBGenerator.h"
+#include "BodySystem.h"
+#include "BodyWind.h"
+
 
 
 using namespace physx;
@@ -35,9 +37,13 @@ PxPvd*                  gPvd        = NULL;
 
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
-ContactReportCallback gContactReportCallback;
+ContactReportCallback	gContactReportCallback;
 
-RBGenerator* Rbodies = NULL;
+BodySystem*				bodySys		= NULL;
+BodyWind*				windUp		= NULL;
+//BodyTorque*				torqueGen	= NULL;
+
+ParticleForceRegistry*	regiF		= NULL;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -67,13 +73,23 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 	// ------------------------------------------------------
 
+	//ground
 	PxShape* plane = CreateShape(PxBoxGeometry(100, 1, 100));
 	PxRigidStatic* ground = gPhysics->createRigidStatic({ 0,0,0 });
 	ground->attachShape(*plane);
 	gScene->addActor(*ground);
 	RenderItem* item = new RenderItem(plane, ground, { 0.6,0.2,1,1 });
 
-	Rbodies = new RBGenerator(gPhysics, gScene);
+	//solid rigid system
+	bodySys = new BodySystem(gPhysics, gScene, { 0,40,0 });
+
+	//forces and torques
+	windUp		= new BodyWind({ 0.f,20.f,0.f });
+	//torqueGen = new BodyTorque({0,0,10}); 
+
+	//registry
+	regiF = new ParticleForceRegistry();
+	
 	
 }
 
@@ -88,7 +104,12 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 
-	Rbodies->update(t);
+	//regiF->addNews(bodysys, { windforce, torquegenerator });
+	
+	bodySys->integrate(t);
+	regiF->updateForces(t);
+	for (auto bds : bodySys->bodies)
+		regiF->addB(bds, windUp);
 }
 
 // Function to clean data
@@ -160,6 +181,7 @@ int main(int, const char*const*)
 * 
 * DOUBTS
 * italy hehehe 
+* PxRigidBodyExt::updateMassAndInertia(*rigid, 1);
 * 
 * TO DO
 * create a scene manager
