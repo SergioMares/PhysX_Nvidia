@@ -45,6 +45,10 @@ BodyWind*				windUp		= NULL;
 
 ParticleForceRegistry*	regiF		= NULL;
 
+PxShape* plane = NULL;
+PxRigidStatic* ground = NULL;
+RenderItem* item = NULL;
+
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -74,17 +78,17 @@ void initPhysics(bool interactive)
 	// ------------------------------------------------------
 
 	//ground
-	PxShape* plane = CreateShape(PxBoxGeometry(100, 1, 100));
-	PxRigidStatic* ground = gPhysics->createRigidStatic({ 0,0,0 });
+	plane = CreateShape(PxBoxGeometry(100, 1, 100));
+	ground = gPhysics->createRigidStatic({ 0,0,0 });
 	ground->attachShape(*plane);
 	gScene->addActor(*ground);
-	RenderItem* item = new RenderItem(plane, ground, { 0.6,0.2,1,1 });
+	item = new RenderItem(plane, ground, { 0.6,0.2,1,1 });
 
 	//solid rigid system
 	bodySys = new BodySystem(gPhysics, gScene, { 0,40,0 });
 
 	//forces and torques
-	windUp		= new BodyWind({ 0.f,20.f,0.f });
+	windUp = new BodyWind({ 100.f,0.f,0.f }, 30, { 0,0,0 });
 	//torqueGen = new BodyTorque({0,0,10}); 
 
 	//registry
@@ -108,14 +112,20 @@ void stepPhysics(bool interactive, double t)
 	
 	bodySys->integrate(t);
 	regiF->updateForces(t);
-	for (auto bds : bodySys->bodies)
-		regiF->addB(bds, windUp);
+	/*for (auto bds : bodySys->bodies)
+		regiF->addB(bds, windUp);*/
+	bodySys->deleteDeads();
 }
 
 // Function to clean data
 // Add custom code to the begining of the function
 void cleanupPhysics(bool interactive)
 {
+	//clean ground
+	item->release();
+	plane->release();
+	ground->release();
+
 	PX_UNUSED(interactive);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++

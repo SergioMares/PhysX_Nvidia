@@ -36,7 +36,7 @@ void BodySystem::addBody() {
 	//complete body struct
 	body->rigid = rigid;
 	body->isNew = true; 
-	//body->life = life;
+	body->life = 5;
 	body->force = { 0.0f, 0.0f, 0.0f };
 	body->torque = { 0.0f, 0.0f, 0.0f };
 	body->item = new RenderItem(shape, rigid, { 0,0,0,1 });
@@ -60,8 +60,46 @@ void BodySystem::integrate(double t)
 
 		bds->rigid->addTorque(bds->torque);
 		bds->torque = { 0,0,0 };
-		//bds->life -= t;
+		bds->life -= t;
+
+		/*if (bds->life <= 0)
+		{
+			delete bds;
+			bodies
+		}*/
 	}	
 
+	/*for (auto i = bodies.begin(); i != bodies.end(); ++i)
+	{
+		if ((*i)->life <= 0)
+		{
+			delete* i;
+			bodies.erase(i);
+			break;
+		}
+	}*/
 	
+}
+
+void BodySystem::deleteDeads()
+{
+	for (auto i = bodies.begin(); i != bodies.end(); ++i)
+	{
+		if ((*i)->life <= 0)
+		{
+			//(*i)->rigid->release();
+			(*i)->item->shape->release();
+			(*i)->item->release();
+			(*i)->rigid->release();
+			
+			delete (*i);
+
+			bodies.erase(i);
+			break;
+
+			/*item->release();
+			plane->release();
+			ground->release();*/
+		}
+	}
 }

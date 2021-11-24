@@ -27,6 +27,7 @@ public:
 	~BodySystem();
 	void addBody();
 	void integrate(double t);
+	void deleteDeads();
 	vector<SolidBody*> bodies;
 
 private:
