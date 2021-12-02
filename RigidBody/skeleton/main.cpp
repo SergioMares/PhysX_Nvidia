@@ -18,6 +18,7 @@
 #include "ParticleBuoyancy.h"
 #include "BodySystem.h"
 #include "BodyWind.h"
+#include "ParticlesSystem.h"
 
 
 
@@ -41,7 +42,8 @@ ContactReportCallback	gContactReportCallback;
 
 BodySystem*				bodySys		= NULL;
 BodyWind*				windUp		= NULL;
-//BodyTorque*				torqueGen	= NULL;
+ParticleGravity*		gravUp		= NULL;
+ParticlesSystem*		fountain	= NULL;
 
 ParticleForceRegistry*	regiF		= NULL;
 
@@ -84,15 +86,19 @@ void initPhysics(bool interactive)
 	gScene->addActor(*ground);
 	item = new RenderItem(plane, ground, { 0.6,0.2,1,1 });
 
-	//solid rigid system
+	//solid rigid and particles system
 	bodySys = new BodySystem(gPhysics, gScene, { 0,40,0 });
+	fountain = new ParticlesSystem({ 0,0,0 }, 30, 0.25, 1, 0.1, 100);
 
-	//forces and torques
+
+	//forces 
 	windUp = new BodyWind({ 100.f,0.f,0.f }, 30, { 0,0,0 });
-	//torqueGen = new BodyTorque({0,0,10}); 
+	gravUp = new ParticleGravity({ 5,0,0 });
 
 	//registry
 	regiF = new ParticleForceRegistry();
+	for (auto prt : fountain->getActors())
+		regiF->add(prt, gravUp);
 	
 	
 }
@@ -106,25 +112,30 @@ void stepPhysics(bool interactive, double t)
 	PX_UNUSED(interactive);
 
 	gScene->simulate(t);
-	gScene->fetchResults(true);
-
-	//regiF->addNews(bodysys, { windforce, torquegenerator });
+	gScene->fetchResults(true);	
 	
+	fountain->UpdateSys(t);
 	bodySys->integrate(t);
 	regiF->updateForces(t);
-	/*for (auto bds : bodySys->bodies)
-		regiF->addB(bds, windUp);*/
-	bodySys->deleteDeads();
+	for (auto bds : bodySys->bodies)
+		regiF->addB(bds, windUp);
+	//bodySys->deleteDeads();//aguas con esto
 }
 
 // Function to clean data
 // Add custom code to the begining of the function
 void cleanupPhysics(bool interactive)
-{
+{//bodysys windup regif
 	//clean ground
 	item->release();
 	plane->release();
 	ground->release();
+
+	delete bodySys;//listo
+	delete windUp;
+	delete regiF;
+	delete fountain;
+	delete gravUp;
 
 	PX_UNUSED(interactive);
 

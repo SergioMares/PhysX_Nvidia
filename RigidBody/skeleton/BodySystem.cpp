@@ -1,7 +1,22 @@
 #include "BodySystem.h"
 
-void BodySystem::addBody() {
+BodySystem::~BodySystem()//bodies<solidbody*> && body rigid shape
+{
+	for (auto bds : bodies)
+	{
+		bds->item->shape->release();
+		bds->item->release();
+		bds->rigid->release();
 
+		delete bds;
+		puts("se borro body");
+	}
+	bodies.clear();
+	puts("se limpo bodies");
+}
+
+void BodySystem::addBody() {
+	
 	SolidBody* body = nullptr;
 	body = new SolidBody;
 
