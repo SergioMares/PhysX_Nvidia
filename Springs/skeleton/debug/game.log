@@ -7,4 +7,5 @@ C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\ParticleGravity.h(1
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\ParticleSpring.h(17,1): warning C5204: 'ParticleSpring': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\ParticleAnchoredSpring.h(17,1): warning C5204: 'ParticleAnchoredSpring': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\skeleton\ParticleBuoyancy.h(21,1): warning C5204: 'ParticleBuoyancy': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+  LINK : ..\bin\gameDEBUG.exe not found or not built by the last incremental link; performing full link
   game.vcxproj -> C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\Springs\bin\gameDEBUG.exe

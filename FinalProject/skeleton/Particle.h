@@ -21,6 +21,7 @@ public:
 	void setPos(Vector3 newPos);
 	void setMass(float newMass);
 	void setDamp(double newDamp);
+	void setNewColor(Vector4 newColor);
 
 private: 
 	Vector3 vel;

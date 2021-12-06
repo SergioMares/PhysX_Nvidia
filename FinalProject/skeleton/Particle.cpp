@@ -99,3 +99,10 @@ void Particle::setDamp(double newDamp)
 {
 	damp = newDamp;
 }
+
+void Particle::setNewColor(Vector4 newColor)
+{
+	figure->color = newColor;
+}
+
+
