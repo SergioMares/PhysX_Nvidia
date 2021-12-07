@@ -19,6 +19,7 @@
 #include "BodySystem.h"
 #include "BodyWind.h"
 #include "ParticlesSystem.h"
+#include "BodySpring.h"
 
 
 
@@ -53,11 +54,59 @@ Particle				*Particle_1 = NULL,
 						*Particle_5 = NULL;
 
 ParticleForceRegistry*	regiF		= NULL;
-ParticleBuoyancy* Buoyancy = NULL;
+ParticleBuoyancy*		Buoyancy	= NULL;
 
-PxShape* plane = NULL;
-PxRigidStatic* ground = NULL;
-RenderItem* item = NULL;
+PxShape					*plane		= NULL;
+
+
+PxRigidStatic			*ground		= NULL;
+
+RenderItem				*item		= NULL,
+						*testItm	= NULL;
+
+// spherical joint limited to an angle of at most pi/4 radians (45 degrees)
+PxJoint* createLimitedSpherical(PxRigidActor* a0, const PxTransform& t0, PxRigidActor* a1, const PxTransform& t1)
+{
+	PxSphericalJoint* j = PxSphericalJointCreate(*gPhysics, a0, t0, a1, t1);
+	j->setLimitCone(PxJointLimitCone(PxPi / 4, PxPi / 4, 0.05f));
+	j->setSphericalJointFlag(PxSphericalJointFlag::eLIMIT_ENABLED, true);
+	return j;
+}
+
+typedef PxJoint* (*JointCreateFunction)(PxRigidActor* a0, const PxTransform& t0, PxRigidActor* a1, const PxTransform& t1);
+
+// create a chain rooted at the origin and extending along the x-axis, all transformed by the argument t.
+void createChain(const PxTransform& t, PxU32 length, const PxGeometry& g, PxReal separation, JointCreateFunction createJoint)
+{
+	PxVec3 offset(separation / 2, 0, 0);
+	PxTransform localTm(offset);
+	PxRigidDynamic* prev = NULL;
+
+	for (PxU32 i = 0; i < length; i++)
+	{
+		PxRigidDynamic* current = PxCreateDynamic(*gPhysics, t * localTm, g, *gMaterial, 1.0f);
+		if (i == 0)
+		{
+			puts("masa cero");
+			current->setMass(0);
+			current->setMassSpaceInertiaTensor(Vector3(0));
+			current->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+		}
+		(*createJoint)(prev, prev ? PxTransform(offset) : t, current, PxTransform(-offset));
+		gScene->addActor(*current);
+		testItm = new RenderItem(CreateShape(g), current, { 0.5,0.5,0.5,1 });
+		prev = current;
+		localTm.p.x += separation;
+
+		if (i == length - 1)
+		{
+			PxRigidStatic* current = PxCreateStatic(*gPhysics, t * localTm, g, *gMaterial);
+			(*createJoint)(prev, prev ? PxTransform(offset) : t, current, PxTransform(-offset));
+			gScene->addActor(*current);
+			testItm = new RenderItem(CreateShape(g), current, { 0.5,0.5,0.5,1 });
+		}
+	}
+}
 
 float	cubeSize;
 
@@ -98,6 +147,7 @@ void initPhysics(bool interactive)
 	gScene->addActor(*ground);
 	item = new RenderItem(plane, ground, { 0,1,1,0 });
 
+
 	//solid rigid and particles system
 	//bodySys = new BodySystem(gPhysics, gScene, { 0,40,0 });
 	fountain = new ParticlesSystem({ 0,-1,0 }, {cubeSize,1,cubeSize}, 0.05, 1, 0.5, 100);
@@ -107,10 +157,6 @@ void initPhysics(bool interactive)
 	Particle_3 = new Particle({ float((rand() % 100) - 50), 10, float((rand() % 20) - 10) }, Vector3(0), 1, rand() % 10, 1, 0.5);
 	Particle_4 = new Particle({ float((rand() % 100) - 50), 10, float((rand() % 20) - 10) }, Vector3(0), 1, rand() % 10, 1, 0.5);
 	Particle_5 = new Particle({ float((rand() % 100) - 50), 10, float((rand() % 20) - 10) }, Vector3(0), 1, rand() % 10, 1, 0.5);
-
-
-
-
 
 	Particle_1->setNewColor({ 0.4,0.6,0.1,1 });
 	Particle_2->setNewColor({ 0.4,0.6,0.1,1 });
@@ -142,6 +188,7 @@ void initPhysics(bool interactive)
 	regiF->add(Particle_4, Buoyancy);
 	regiF->add(Particle_5, Buoyancy);
 
+	createChain(PxTransform(PxVec3(10.0f, 10.0f, 10.0f)), 4, PxBoxGeometry(2.0f, 0.5f, 0.5f), 6.0f, createLimitedSpherical);
 }
 
 
@@ -166,9 +213,7 @@ void stepPhysics(bool interactive, double t)
 	Particle_2->Update(t);
 	Particle_3->Update(t);
 	Particle_4->Update(t);
-	Particle_5->Update(t);
-
-	cout << Particle_1->getPos().p.y << endl;
+	Particle_5->Update(t);	
 }
 
 // Function to clean data
