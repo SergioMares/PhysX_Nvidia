@@ -11,6 +11,6 @@ C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\FinalProject\skeleton\ParticleBuoyan
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\FinalProject\skeleton\BodyWind.h(14,1): warning C5204: 'BodyWind': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\FinalProject\skeleton\BodyWind.h(10,14): warning C5038: data member 'BodyWind::r' will be initialized after data member 'BodyWind::p'
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\FinalProject\skeleton\BodySpring.h(14,1): warning C5204: 'BodySpring': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\FinalProject\skeleton\main.cpp(103,29): warning C4456: declaration of 'current' hides previous local declaration
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\FinalProject\skeleton\main.cpp(87,19): message : see declaration of 'current'
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\FinalProject\skeleton\main.cpp(111,29): warning C4456: declaration of 'current' hides previous local declaration
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\FinalProject\skeleton\main.cpp(95,19): message : see declaration of 'current'
   game.vcxproj -> C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\FinalProject\bin\gameDEBUG.exe

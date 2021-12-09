@@ -17,10 +17,10 @@ struct SolidBody
 class BodySystem
 {
 public: 
-	BodySystem(PxPhysics* _gPhysics, PxScene* _gScene, PxTransform _pSet) :
-		gPhysics(_gPhysics), gScene(_gScene), pSet(_pSet) 
+	BodySystem(PxPhysics* _gPhysics, PxScene* _gScene, PxTransform _pSet, PxMaterial *_gMaterial) :
+		gPhysics(_gPhysics), gScene(_gScene), pSet(_pSet), Material(_gMaterial)
 	{
-		rateSpawn = 0.1;
+		rateSpawn = 1;
 		timeSpawn = 0;		
 	}
 
@@ -34,6 +34,7 @@ private:
 	PxPhysics*	gPhysics	= nullptr;
 	PxScene*	gScene		= nullptr;
 	PxTransform	pSet;
+	PxMaterial* Material = nullptr;
 
 	double timeSpawn, rateSpawn;
 

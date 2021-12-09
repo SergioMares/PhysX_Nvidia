@@ -21,8 +21,6 @@
 #include "ParticlesSystem.h"
 #include "BodySpring.h"
 
-
-
 using namespace physx;
 using namespace std;
 
@@ -33,7 +31,8 @@ PxFoundation*			gFoundation = NULL;
 PxPhysics*				gPhysics	= NULL;
 
 
-PxMaterial*				gMaterial	= NULL;
+PxMaterial*				gMaterial	= NULL,
+						*iceMaterial= NULL;
 
 PxPvd*                  gPvd        = NULL;
 
@@ -41,8 +40,6 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback	gContactReportCallback;
 
-//BodySystem*				bodySys		= NULL;
-//BodyWind*				windUp		= NULL;
 ParticleGravity*		gravUp		= NULL;
 ParticleGravity*		gravDown	= NULL;
 ParticlesSystem*		fountain	= NULL;
@@ -56,13 +53,24 @@ Particle				*Particle_1 = NULL,
 ParticleForceRegistry*	regiF		= NULL;
 ParticleBuoyancy*		Buoyancy	= NULL;
 
-PxShape					*plane		= NULL;
+PxShape					*plane		= NULL,
+						*landSh		= NULL,
+						*snowSh		= NULL;
 
 
-PxRigidStatic			*ground		= NULL;
+PxRigidStatic			*ground		= NULL,
+						*landRS1	= NULL,
+						*landRS2	= NULL,
+						*snowRS		= NULL;
 
 RenderItem				*item		= NULL,
-						*testItm	= NULL;
+						*testItm	= NULL,
+						*landItm1	= NULL,
+						*landItm2	= NULL,
+						*snowItm	= NULL;
+
+BodySystem*				bodySys		= NULL;
+
 
 // spherical joint limited to an angle of at most pi/4 radians (45 degrees)
 PxJoint* createLimitedSpherical(PxRigidActor* a0, const PxTransform& t0, PxRigidActor* a1, const PxTransform& t1)
@@ -78,7 +86,7 @@ typedef PxJoint* (*JointCreateFunction)(PxRigidActor* a0, const PxTransform& t0,
 // create a chain rooted at the origin and extending along the x-axis, all transformed by the argument t.
 void createChain(const PxTransform& t, PxU32 length, const PxGeometry& g, PxReal separation, JointCreateFunction createJoint)
 {
-	PxVec3 offset(separation / 2, 0, 0);
+	PxVec3 offset(0, 0, separation / 2);
 	PxTransform localTm(offset);
 	PxRigidDynamic* prev = NULL;
 
@@ -96,7 +104,7 @@ void createChain(const PxTransform& t, PxU32 length, const PxGeometry& g, PxReal
 		gScene->addActor(*current);
 		testItm = new RenderItem(CreateShape(g), current, { 0.5,0.5,0.5,1 });
 		prev = current;
-		localTm.p.x += separation;
+		localTm.p.z += separation;
 
 		if (i == length - 1)
 		{
@@ -124,6 +132,7 @@ void initPhysics(bool interactive)
 	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(),true,gPvd);
 
 	gMaterial = gPhysics->createMaterial(0.5, 0.5, 0.5);//static, dynamic, bounce
+	iceMaterial = gPhysics->createMaterial(0, 0, 0);
 
 	//actorPos(30, 40, 40);		
 	srand(time(NULL));
@@ -149,7 +158,6 @@ void initPhysics(bool interactive)
 
 
 	//solid rigid and particles system
-	//bodySys = new BodySystem(gPhysics, gScene, { 0,40,0 });
 	fountain = new ParticlesSystem({ 0,-1,0 }, {cubeSize,1,cubeSize}, 0.05, 1, 0.5, 100);
 
 	Particle_1 = new Particle({ float((rand() % 100) - 50), 10, float((rand() % 20) - 10) }, Vector3(0), 1, rand() % 10, 1, 0.5);
@@ -188,7 +196,26 @@ void initPhysics(bool interactive)
 	regiF->add(Particle_4, Buoyancy);
 	regiF->add(Particle_5, Buoyancy);
 
-	createChain(PxTransform(PxVec3(10.0f, 10.0f, 10.0f)), 4, PxBoxGeometry(2.0f, 0.5f, 0.5f), 6.0f, createLimitedSpherical);
+	createChain(PxTransform(PxVec3(30.0f, 2.0f, -10.0f)), 10, PxBoxGeometry(2.0f, 0.5f, 0.5f), 2.0f, createLimitedSpherical);	
+
+	landSh = CreateShape(PxBoxGeometry(cubeSize, 1, cubeSize/2));
+	landRS1 = gPhysics->createRigidStatic({ 0,0,35 });
+	landRS1->attachShape(*landSh);
+	gScene->addActor(*landRS1);
+	landItm1 = new RenderItem(landSh, landRS1, { 0.6,0.4,0.3,1 });
+		
+	landRS2 = gPhysics->createRigidStatic({ 0,0,-33 });
+	landRS2->attachShape(*landSh);
+	gScene->addActor(*landRS2);
+	landItm2 = new RenderItem(landSh, landRS2, { 0.6,0.4,0.3,1 });
+
+	bodySys = new BodySystem(gPhysics, gScene, { -35,10,35 }, iceMaterial);
+
+	//snowSh = CreateShape(PxBoxGeometry(cubeSize / 4, 0.5, cubeSize / 4)); 
+	snowSh = gPhysics->createShape(PxBoxGeometry(cubeSize / 4, 0.5, cubeSize / 4), *iceMaterial);
+	snowRS = PxCreateStatic(*gPhysics, PxTransform(Vector3(-35,1,35)), PxBoxGeometry(cubeSize / 4, 0.5, cubeSize / 4), *iceMaterial);
+	gScene->addActor(*snowRS);
+	snowItm = new RenderItem(snowSh, snowRS, { 0.9,0.9,0.9,1 });
 }
 
 
@@ -203,17 +230,16 @@ void stepPhysics(bool interactive, double t)
 	gScene->fetchResults(true);	
 	
 	fountain->UpdateSys(t);
-	//bodySys->integrate(t);
+	bodySys->integrate(t);
 	regiF->updateForces(t);
-	/*for (auto bds : bodySys->bodies)
-		regiF->addB(bds, windUp);*/
-	//bodySys->deleteDeads();//aguas con esto
+	bodySys->deleteDeads();//aguas con esto
 
 	Particle_1->Update(t);
 	Particle_2->Update(t);
 	Particle_3->Update(t);
 	Particle_4->Update(t);
 	Particle_5->Update(t);	
+
 }
 
 // Function to clean data
@@ -225,7 +251,7 @@ void cleanupPhysics(bool interactive)
 	plane->release();
 	ground->release();
 
-	//delete bodySys;//listo
+	delete bodySys;//listo
 	//delete windUp;
 	delete regiF;
 	delete fountain;
@@ -302,8 +328,6 @@ int main(int, const char*const*)
 * 
 * 
 * DOUBTS
-* italy hehehe 
-* PxRigidBodyExt::updateMassAndInertia(*rigid, 1);
 * 
 * TO DO
 - partículas con distinta masa

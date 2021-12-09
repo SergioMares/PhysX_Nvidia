@@ -24,11 +24,11 @@ void BodySystem::addBody() {
 	PxRigidDynamic* rigid = gPhysics->createRigidDynamic(pSet);
 
 	//shape
-	PxShape* shape = CreateShape(PxSphereGeometry(1));
+	PxShape* shape = gPhysics->createShape(PxBoxGeometry(1,1,1), *Material);
 	rigid->attachShape(*shape);
 
 	//Cinetica
-	int partVel = 10;
+	int partVel = 5;
 	int rX = rand() % partVel * 2 - partVel;
 	int rY = rand() % partVel * 2 - partVel;
 	int rZ = rand() % partVel * 2 - partVel;
@@ -36,7 +36,7 @@ void BodySystem::addBody() {
 	Vector3 vel(rX, rY, rZ);
 
 	rigid->setLinearVelocity(vel);
-	rigid->setAngularVelocity({ 0,2,0 });
+	rigid->setAngularVelocity({ 0,0,0 });
 	rigid->setLinearDamping(0.0);
 	rigid->setAngularDamping(0.05);
 	
