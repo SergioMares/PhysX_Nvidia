@@ -1,13 +1,11 @@
-﻿  main.cpp
+﻿  BodyTorque.cpp
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: 'physx::PxLightCpuTask::mRefCount': a non-static data member with a volatile qualified type no longer implies
            that compiler generated copy/move constructors and copy/move assignment operators are not trivial
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\common\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : see declaration of 'physx::PxLightCpuTask::mRefCount'
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleForceGenerator.h(8,1): warning C5204: 'ParticleForceGenerator': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleGravity.h(12,1): warning C5204: 'ParticleGravity': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
 C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\BodyForceGenerator.h(9,1): warning C5204: 'BodyForceGenerator': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleSpring.h(17,1): warning C5204: 'ParticleSpring': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleAnchoredSpring.h(17,1): warning C5204: 'ParticleAnchoredSpring': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\ParticleBuoyancy.h(21,1): warning C5204: 'ParticleBuoyancy': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\BodyWind.h(14,1): warning C5204: 'BodyWind': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
-C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\BodyWind.h(10,14): warning C5038: data member 'BodyWind::r' will be initialized after data member 'BodyWind::p'
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\BodyTorque.h(10,15): warning C4263: 'void BodyTorque::updateForce(SolidBody *,float)': member function does not override any base class virtual member function
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\BodyTorque.h(11,1): warning C4264: 'void BodyForceGenerator::updateForce(SolidBody *,double)': no override available for virtual member function from base 'BodyForceGenerator'; function is hidden
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\BodyForceGenerator.h(8): message : see declaration of 'BodyForceGenerator::updateForce'
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\BodyForceGenerator.h(5): message : see declaration of 'BodyForceGenerator'
+C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\skeleton\BodyTorque.h(11,1): warning C5204: 'BodyTorque': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
   game.vcxproj -> C:\Users\Tato\Documents\GitHub\PhysX_Nvidia\RigidBody\bin\gameDEBUG.exe

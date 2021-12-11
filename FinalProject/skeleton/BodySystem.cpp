@@ -36,22 +36,22 @@ void BodySystem::addBody() {
 	Vector3 vel(rX, rY, rZ);
 
 	rigid->setLinearVelocity(vel);
-	rigid->setAngularVelocity({ 0,0,0 });
-	rigid->setLinearDamping(0.0);
-	rigid->setAngularDamping(0.05);
+	rigid->setAngularVelocity({ float(rX / 4),float(rY / 4),float(rZ / 4) });
+	rigid->setLinearDamping(0.1);
+	rigid->setAngularDamping(0.1416);
 	
 	//Dinámica
-	rigid->setMass(2);
-	rigid->setMassSpaceInertiaTensor(PxVec3(0.f, 0.f, 1.f));
+	rigid->setMass(1);
+	rigid->setMassSpaceInertiaTensor(PxVec3(float(rand() / 10), float(rand() / 10), float(rand() / 10)));
 
-	//PxRigidBodyExt::updateMassAndInertia(*rigid, 1);
+	PxRigidBodyExt::updateMassAndInertia(*rigid, 1);
 
 	gScene->addActor(*rigid);
 
 	//complete body struct
 	body->rigid = rigid;
 	body->isNew = true; 
-	body->life = 5;
+	body->life = 10;
 	body->force = { 0.0f, 0.0f, 0.0f };
 	body->torque = { 0.0f, 0.0f, 0.0f };
 	body->item = new RenderItem(shape, rigid, { 0,0,0,1 });

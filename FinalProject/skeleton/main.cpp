@@ -71,6 +71,11 @@ RenderItem				*item		= NULL,
 
 BodySystem*				bodySys		= NULL;
 
+vector<PxRigidDynamic*> spheres;
+vector<RenderItem*> sphereItems;
+
+PxReal density = 25;
+
 
 // spherical joint limited to an angle of at most pi/4 radians (45 degrees)
 PxJoint* createLimitedSpherical(PxRigidActor* a0, const PxTransform& t0, PxRigidActor* a1, const PxTransform& t1)
@@ -78,6 +83,7 @@ PxJoint* createLimitedSpherical(PxRigidActor* a0, const PxTransform& t0, PxRigid
 	PxSphericalJoint* j = PxSphericalJointCreate(*gPhysics, a0, t0, a1, t1);
 	j->setLimitCone(PxJointLimitCone(PxPi / 4, PxPi / 4, 0.05f));
 	j->setSphericalJointFlag(PxSphericalJointFlag::eLIMIT_ENABLED, true);
+	j->setBreakForce(100000.0f, 100000.0f);
 	return j;
 }
 
@@ -100,7 +106,8 @@ void createChain(const PxTransform& t, PxU32 length, const PxGeometry& g, PxReal
 			current->setMassSpaceInertiaTensor(Vector3(0));
 			current->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
 		}
-		(*createJoint)(prev, prev ? PxTransform(offset) : t, current, PxTransform(-offset));
+		(*createJoint)(prev, prev ? PxTransform(offset + PxVec3(2, 0, 0)) : t, current, PxTransform(-offset + PxVec3(2, 0, 0)));
+		(*createJoint)(prev, prev ? PxTransform(offset + PxVec3(-2, 0, 0)) : t, current, PxTransform(-offset + PxVec3(-2, 0, 0)));
 		gScene->addActor(*current);
 		testItm = new RenderItem(CreateShape(g), current, { 0.5,0.5,0.5,1 });
 		prev = current;
@@ -109,7 +116,8 @@ void createChain(const PxTransform& t, PxU32 length, const PxGeometry& g, PxReal
 		if (i == length - 1)
 		{
 			PxRigidStatic* current = PxCreateStatic(*gPhysics, t * localTm, g, *gMaterial);
-			(*createJoint)(prev, prev ? PxTransform(offset) : t, current, PxTransform(-offset));
+			(*createJoint)(prev, prev ? PxTransform(offset + PxVec3(2, 0, 0)) : t, current, PxTransform(-offset + PxVec3(2, 0, 0)));
+			(*createJoint)(prev, prev ? PxTransform(offset + PxVec3(-2, 0, 0)) : t, current, PxTransform(-offset + PxVec3(-2, 0, 0)));
 			gScene->addActor(*current);
 			testItm = new RenderItem(CreateShape(g), current, { 0.5,0.5,0.5,1 });
 		}
@@ -150,11 +158,18 @@ void initPhysics(bool interactive)
 	cubeSize = 50;
 	
 	//ground
-	plane = CreateShape(PxBoxGeometry(cubeSize, cubeSize, cubeSize));
+	/*plane = CreateShape(PxBoxGeometry(cubeSize, cubeSize, cubeSize));
 	ground = gPhysics->createRigidStatic({ 0,-cubeSize,0 });
 	ground->attachShape(*plane);
 	gScene->addActor(*ground);
-	item = new RenderItem(plane, ground, { 0,1,1,0 });
+	item = new RenderItem(plane, ground, { 0,1,1,0 });*/
+	
+	PxTransform* posss = new PxTransform(0, -cubeSize, 0);
+	plane = CreateShape(PxBoxGeometry(cubeSize, cubeSize, cubeSize));
+	//ground = gPhysics->createRigidStatic({ 0,-cubeSize,0 });
+	//ground->attachShape(*plane);
+	//gScene->addActor(*ground);
+	item = new RenderItem(plane, posss, { 0,1,1,0 });
 
 
 	//solid rigid and particles system
@@ -247,9 +262,9 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {//bodysys windup regif
 	//clean ground
-	item->release();
-	plane->release();
-	ground->release();
+	//item->release();
+	//plane->release();
+	//ground->release();
 
 	delete bodySys;//listo
 	//delete windUp;
@@ -262,6 +277,12 @@ void cleanupPhysics(bool interactive)
 	delete Particle_3;
 	delete Particle_4;
 	delete Particle_5;
+
+	for (auto a : spheres)
+		a->release();
+	
+	for (auto a : sphereItems)
+		a->release();
 
 
 	PX_UNUSED(interactive);
@@ -285,11 +306,22 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-	case 'C': break;
+	case 'C':
+	{//*gPhysics, t * localTm, g, *gMaterial, 1.0f PxTransform(PxVec3(30.0f, 2.0f, -10.0f))
+		PxRigidDynamic* sphere = PxCreateDynamic(*gPhysics, PxTransform(PxVec3(30.0f, 20.0f, 0.0f)), PxSphereGeometry(1), *gMaterial, density);
+		gScene->addActor(*sphere);
+
+		sphereItems.push_back(new RenderItem(CreateShape(PxSphereGeometry(1)), sphere, { 0.5,0.5,0.5,1 }));
+		spheres.push_back(sphere);
+		break;
+	}
 	case 'U': break;
 	case 'J': break;
 	case 'G': break;
-	case '+': break;
+	case '+': 
+		density++;
+		cout << "actual density: " << density << endl;
+		break;
 	case '-': break;
 	case '1': break;
 	case '2': break;

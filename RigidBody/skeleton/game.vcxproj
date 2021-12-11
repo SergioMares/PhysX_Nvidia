@@ -255,6 +255,7 @@
   <ItemGroup>
     <ClCompile Include="BodyForceGenerator.cpp" />
     <ClCompile Include="BodySystem.cpp" />
+    <ClCompile Include="BodyTorque.cpp" />
     <ClCompile Include="BodyWind.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="main.cpp" />
@@ -273,6 +274,7 @@
   <ItemGroup>
     <ClInclude Include="BodyForceGenerator.h" />
     <ClInclude Include="BodySystem.h" />
+    <ClInclude Include="BodyTorque.h" />
     <ClInclude Include="BodyWind.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />

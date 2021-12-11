@@ -24,7 +24,7 @@ void BodySystem::addBody() {
 	PxRigidDynamic* rigid = gPhysics->createRigidDynamic(pSet);
 
 	//shape
-	PxShape* shape = CreateShape(PxSphereGeometry(1));
+	PxShape* shape = CreateShape(PxBoxGeometry(1,1,1));
 	rigid->attachShape(*shape);
 
 	//Cinetica
@@ -36,13 +36,14 @@ void BodySystem::addBody() {
 	Vector3 vel(rX, rY, rZ);
 
 	rigid->setLinearVelocity(vel);
-	rigid->setAngularVelocity({ 0,2,0 });
+	//rigid->setAngularVelocity({ 0,0,0 });
+	rigid->setAngularVelocity({ float(rZ * 2),float(rX * 2),float(rY * 2) });
 	rigid->setLinearDamping(0.0);
 	rigid->setAngularDamping(0.05);
 	
 	//Dinámica
 	rigid->setMass(2);
-	rigid->setMassSpaceInertiaTensor(PxVec3(0.f, 0.f, 1.f));
+	rigid->setMassSpaceInertiaTensor(PxVec3(0.f, 0.f, 1.f));//se están bloqueando los ejes en 0
 
 	//PxRigidBodyExt::updateMassAndInertia(*rigid, 1);
 

@@ -21,6 +21,7 @@
     <ClCompile Include="BodySystem.cpp" />
     <ClCompile Include="BodyForceGenerator.cpp" />
     <ClCompile Include="BodyWind.cpp" />
+    <ClCompile Include="BodyTorque.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="BodySystem.h" />
     <ClInclude Include="BodyForceGenerator.h" />
     <ClInclude Include="BodyWind.h" />
+    <ClInclude Include="BodyTorque.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

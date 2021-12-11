@@ -64,14 +64,14 @@ void initPhysics(bool interactive)
 
 	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(),true,gPvd);
 
-	gMaterial = gPhysics->createMaterial(0.5, 0.5, 0.5);//static, dynamic, bounce
+	gMaterial = gPhysics->createMaterial(0.9, 0.9, 0.6);//static, dynamic, restitution
 
 	//actorPos(30, 40, 40);		
 	srand(time(NULL));
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
-	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
+	sceneDesc.gravity = PxVec3(0.0f, -90.8f, 0.0f);
 	gDispatcher = PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = gDispatcher;
 	sceneDesc.filterShader = contactReportFilterShader;
@@ -92,7 +92,7 @@ void initPhysics(bool interactive)
 
 
 	//forces 
-	windUp = new BodyWind({ 100.f,0.f,0.f }, 30, { 0,0,0 });
+	windUp = new BodyWind({ 1000.f,0.f,0.f }, 30, { 0,0,0 });
 	gravUp = new ParticleGravity({ 5,0,0 });
 
 	//registry

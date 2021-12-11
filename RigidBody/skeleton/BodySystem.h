@@ -20,7 +20,7 @@ public:
 	BodySystem(PxPhysics* _gPhysics, PxScene* _gScene, PxTransform _pSet) :
 		gPhysics(_gPhysics), gScene(_gScene), pSet(_pSet) 
 	{
-		rateSpawn = 0.1;
+		rateSpawn = 0.5;
 		timeSpawn = 0;		
 	}
 
