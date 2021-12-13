@@ -20,6 +20,7 @@
 #include "BodyWind.h"
 #include "ParticlesSystem.h"
 #include "BodySpring.h"
+#include "Fireworks.h"
 
 using namespace physx;
 using namespace std;
@@ -67,9 +68,15 @@ RenderItem				*item		= NULL,
 						*testItm	= NULL,
 						*landItm1	= NULL,
 						*landItm2	= NULL,
-						*snowItm	= NULL;
+						*snowItm	= NULL,
+						*skyBox		= NULL;
 
 BodySystem*				bodySys		= NULL;
+
+Fireworks				*FW1		= NULL;
+
+
+bool fwFlag1 = false;
 
 vector<PxRigidDynamic*> spheres;
 vector<RenderItem*> sphereItems;
@@ -164,16 +171,19 @@ void initPhysics(bool interactive)
 	gScene->addActor(*ground);
 	item = new RenderItem(plane, ground, { 0,1,1,0 });*/
 	
-	PxTransform* posss = new PxTransform(0, -cubeSize, 0);
+	PxTransform* posss = new PxTransform(0, -cubeSize, 0); 
 	plane = CreateShape(PxBoxGeometry(cubeSize, cubeSize, cubeSize));
 	//ground = gPhysics->createRigidStatic({ 0,-cubeSize,0 });
 	//ground->attachShape(*plane);
 	//gScene->addActor(*ground);
 	item = new RenderItem(plane, posss, { 0,1,1,0 });
+	
+	
+	skyBox = new RenderItem(CreateShape(PxBoxGeometry(cubeSize * 10, cubeSize * 10, cubeSize * 10)), posss, { 0,0,0.3,0 });
 
 
 	//solid rigid and particles system
-	fountain = new ParticlesSystem({ 0,-1,0 }, {cubeSize,1,cubeSize}, 0.05, 1, 0.5, 100);
+	fountain = new ParticlesSystem({ 0,-1,0 }, {cubeSize*2,1,cubeSize*2}, 0.05, 1, 0.5, 100);
 
 	Particle_1 = new Particle({ float((rand() % 100) - 50), 10, float((rand() % 20) - 10) }, Vector3(0), 1, rand() % 10, 1, 0.5);
 	Particle_2 = new Particle({ float((rand() % 100) - 50), 10, float((rand() % 20) - 10) }, Vector3(0), 1, rand() % 10, 1, 0.5);
@@ -255,6 +265,8 @@ void stepPhysics(bool interactive, double t)
 	Particle_4->Update(t);
 	Particle_5->Update(t);	
 
+	if (fwFlag1)
+		FW1->UpdateSys(t);
 }
 
 // Function to clean data
@@ -322,8 +334,14 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		density++;
 		cout << "actual density: " << density << endl;
 		break;
-	case '-': break;
-	case '1': break;
+	case '-': 
+		density--;
+		cout << "actual density: " << density << endl;
+		break;
+	case '1': 
+		FW1 = new Fireworks({100,-10,100}, true, 1);
+		fwFlag1 = true;
+		break;
 	case '2': break;
 	case '3': break;
 	case '4': break;
@@ -363,9 +381,6 @@ int main(int, const char*const*)
 * 
 * TO DO
 - partículas con distinta masa
-
-- un ejemplo de muelle (con rígidos pls)
-- un sistema de sólidos rígidos
 - sólidos rígidos con distinto tamaño, masa y momento de inercia
 
 - 2 generadores de fuerzas diferentes (sin contar muelles), cada uno con su fórmula y sus restricciones de aplicación
@@ -375,29 +390,4 @@ int main(int, const char*const*)
 - fuegos artificiales
 - gestión de creación y destrucción de instancias (las partículas no pueden estar indefinidamente en escena, tampoco pueden estar desde el principio, ha de existir un mecanismo que cree las partículas)
 - destrucción de todos los elementos al salir de la escena
-
-
-nenúfares en el agua. Ponles masa diferente
-a cada uno para cumplir con otro punto
-
-puente para muelle. De ser posible, con
-sólidos rígidos para que se mueva cuando
-le cae un objeto. Aquí ya iría el sistema
-de sólidos rígidos. Añade a este sistema
-masa, tamaño y momentos de inercia
-aleatorios para cumplir otro punto
-
-1 generadores de fuerza por definir.
-Puedes hacer una fuente y te quitas
-de broncas (viento y gravedad)
-Una idea puede ser lo del espacio. Esto está
-cool porque puedes manejar distintas
-gravedades y quedaría mamalón. A parte de
-que sería un completo extra bb
-
-ojo para esto de arriba contempla usar un
-gestor de escenas
-
-usa los fuegos artificiales que ya tienes y
-si puedes, corrige el sistema
 */

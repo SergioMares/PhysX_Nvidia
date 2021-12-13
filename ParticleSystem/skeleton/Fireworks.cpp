@@ -125,7 +125,8 @@ void Fireworks::Clear()
 	//delete the particle if it hasnt already been removed
 	if (!bSpawn)
 		if (isfinite(primigenial->getPos().p.x))
-			delete primigenial;
+			//delete primigenial;
+			primigenial->~Particle();
 
 	//delete the new ones if has payload, if they have already spawned and if doesnt have been removed
 	if (bSpawn && bPayload)
