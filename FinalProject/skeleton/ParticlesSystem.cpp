@@ -3,13 +3,14 @@
 
 using namespace std;
 
-ParticlesSystem::ParticlesSystem(Vector3 _EmitterPos, Vector3 _PartVel, float _PartSize, float _PartMass, float _SpawnRate,  int _Amount)
+ParticlesSystem::ParticlesSystem(Vector3 _EmitterPos, Vector3 _PartVel, float _PartSize, float _PartMass, float _SpawnRate,  int _Amount, float _damping)
 {
 	emitter = _EmitterPos;
 	mass = _PartMass;
 	partVel = _PartVel;
 	rate = _SpawnRate;
 	amount = _Amount;
+	damp = _damping;
 	
 
 	counter = 0;
@@ -22,7 +23,7 @@ ParticlesSystem::ParticlesSystem(Vector3 _EmitterPos, Vector3 _PartVel, float _P
 	//initialize all particles
 	for (size_t i = 0; i < amount; i++)
 	{
-		Actorss.push_back(new Particle(_EmitterPos, Vector3(0), _PartSize, 10, 1));
+		Actorss.push_back(new Particle(_EmitterPos, Vector3(0), _PartSize, 10, 1,damp));
 	}
 	
 	Container = new Particle(emitter, Vector3(0), _PartSize * 2, INFINITY, 1);

@@ -9,6 +9,7 @@
 #include "callbacks.hpp"
 
 #include "Particle.h"
+#include "ParticleWind.h"
 
 #include <iostream>
 #include "ParticleGravity.h"
@@ -43,13 +44,17 @@ ContactReportCallback	gContactReportCallback;
 
 ParticleGravity*		gravUp		= NULL;
 ParticleGravity*		gravDown	= NULL;
-ParticlesSystem*		fountain	= NULL;
+ParticleWind*			windUp		= NULL;
+
+ParticlesSystem			*fountain	= NULL,
+						*fountain2	= NULL;
 
 Particle				*Particle_1 = NULL,
 						*Particle_2 = NULL,
 						*Particle_3 = NULL,
 						*Particle_4 = NULL,
-						*Particle_5 = NULL;
+						*Particle_5 = NULL,
+						*Particle_6 = NULL;
 
 ParticleForceRegistry*	regiF		= NULL;
 ParticleBuoyancy*		Buoyancy	= NULL;
@@ -106,6 +111,8 @@ void createChain(const PxTransform& t, PxU32 length, const PxGeometry& g, PxReal
 	for (PxU32 i = 0; i < length; i++)
 	{
 		PxRigidDynamic* current = PxCreateDynamic(*gPhysics, t * localTm, g, *gMaterial, 1.0f);
+		current->setLinearDamping(4);
+		
 		if (i == 0)
 		{
 			puts("masa cero");
@@ -183,22 +190,25 @@ void initPhysics(bool interactive)
 
 
 	//solid rigid and particles system
-	fountain = new ParticlesSystem({ 0,-1,0 }, {cubeSize*2,1,cubeSize*2}, 0.05, 1, 0.5, 100);
+	fountain = new ParticlesSystem({ 0,-1,0 }, {cubeSize*2,1,cubeSize*2}, 0.05, 1, 0.5, 100,0.1);
+	fountain2 = new ParticlesSystem({ 30, 1, -30 }, Vector3(3), 0.1, 1, 0.1, 100,0.9);
 
 	Particle_1 = new Particle({ float((rand() % 100) - 50), 10, float((rand() % 20) - 10) }, Vector3(0), 1, rand() % 10, 1, 0.5);
 	Particle_2 = new Particle({ float((rand() % 100) - 50), 10, float((rand() % 20) - 10) }, Vector3(0), 1, rand() % 10, 1, 0.5);
 	Particle_3 = new Particle({ float((rand() % 100) - 50), 10, float((rand() % 20) - 10) }, Vector3(0), 1, rand() % 10, 1, 0.5);
 	Particle_4 = new Particle({ float((rand() % 100) - 50), 10, float((rand() % 20) - 10) }, Vector3(0), 1, rand() % 10, 1, 0.5);
 	Particle_5 = new Particle({ float((rand() % 100) - 50), 10, float((rand() % 20) - 10) }, Vector3(0), 1, rand() % 10, 1, 0.5);
+	Particle_6 = new Particle({ 30,1,-30 }, Vector3(0), 1, rand() % 10, 1, 0.5);
 
 	Particle_1->setNewColor({ 0.4,0.6,0.1,1 });
 	Particle_2->setNewColor({ 0.4,0.6,0.1,1 });
 	Particle_3->setNewColor({ 0.4,0.6,0.1,1 });
 	Particle_4->setNewColor({ 0.4,0.6,0.1,1 });
 	Particle_5->setNewColor({ 0.4,0.6,0.1,1 });
+	Particle_6->setNewColor({ 0.9,0.9,0.9,1 });
 
 	//forces 
-	//windUp = new BodyWind({ 100.f,0.f,0.f }, 30, { 0,0,0 });
+	windUp = new ParticleWind({ 0.f,800.f,0.f }, 2, { 30,0,-30 });
 	gravUp	 = new ParticleGravity({ 0,1,0 });
 	gravDown = new ParticleGravity({ 0,-10,0 });
 	
@@ -208,7 +218,13 @@ void initPhysics(bool interactive)
 	regiF = new ParticleForceRegistry();
 	for (auto prt : fountain->getActors())
 		regiF->add(prt, gravUp);
-	
+	for (auto prt : fountain2->getActors())
+	{
+		regiF->add(prt, gravDown);
+		regiF->add(prt, windUp);
+		prt->setNewColor(Vector4(0, 1, 1, 1));
+	}
+
 	regiF->add(Particle_1, gravDown);
 	regiF->add(Particle_2, gravDown);
 	regiF->add(Particle_3, gravDown);
@@ -255,10 +271,10 @@ void stepPhysics(bool interactive, double t)
 	gScene->fetchResults(true);	
 	
 	fountain->UpdateSys(t);
+	fountain2->UpdateSys(t);
 	bodySys->integrate(t);
 	regiF->updateForces(t);
 	bodySys->deleteDeads();//aguas con esto
-
 	Particle_1->Update(t);
 	Particle_2->Update(t);
 	Particle_3->Update(t);
@@ -384,10 +400,6 @@ int main(int, const char*const*)
 - sólidos rígidos con distinto tamaño, masa y momento de inercia
 
 - 2 generadores de fuerzas diferentes (sin contar muelles), cada uno con su fórmula y sus restricciones de aplicación
-- activación de efectos por teclado
-
-
-- fuegos artificiales
 - gestión de creación y destrucción de instancias (las partículas no pueden estar indefinidamente en escena, tampoco pueden estar desde el principio, ha de existir un mecanismo que cree las partículas)
 - destrucción de todos los elementos al salir de la escena
 */

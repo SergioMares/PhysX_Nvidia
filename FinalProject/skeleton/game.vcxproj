@@ -268,6 +268,7 @@
     <ClCompile Include="ParticleGravity.cpp" />
     <ClCompile Include="ParticleSpring.cpp" />
     <ClCompile Include="ParticlesSystem.cpp" />
+    <ClCompile Include="ParticleWind.cpp" />
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
@@ -288,6 +289,7 @@
     <ClInclude Include="ParticleGravity.h" />
     <ClInclude Include="ParticleSpring.h" />
     <ClInclude Include="ParticlesSystem.h" />
+    <ClInclude Include="ParticleWind.h" />
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />

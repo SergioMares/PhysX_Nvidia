@@ -23,6 +23,7 @@
     <ClCompile Include="BodyWind.cpp" />
     <ClCompile Include="BodySpring.cpp" />
     <ClCompile Include="Fireworks.cpp" />
+    <ClCompile Include="ParticleWind.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="BodyWind.h" />
     <ClInclude Include="BodySpring.h" />
     <ClInclude Include="Fireworks.h" />
+    <ClInclude Include="ParticleWind.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

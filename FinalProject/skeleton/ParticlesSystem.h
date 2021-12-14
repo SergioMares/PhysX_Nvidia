@@ -5,7 +5,7 @@
 class ParticlesSystem
 {
 public:
-	ParticlesSystem(Vector3 EmitterPos, Vector3 PartVelocity, float PartSize, float PartMass, float SpawnRate, int Amount);
+	ParticlesSystem(Vector3 EmitterPos, Vector3 PartVelocity, float PartSize, float PartMass, float SpawnRate, int Amount, float _Damping);
 	~ParticlesSystem();
 
 	void UpdateSys(double t);
@@ -17,6 +17,7 @@ private:
 	float mass;
 	int amount;
 	float rate;
+	float damp;
 	
 	Vector4 containerColor, partColor;
 
