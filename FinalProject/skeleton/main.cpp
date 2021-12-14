@@ -90,7 +90,7 @@ vector<RenderItem*> sphereItems;
 PxReal density = 25;
 #pragma endregion
 
-
+#pragma region joints
 // spherical joint limited to an angle of at most pi/4 radians (45 degrees)
 PxJoint* createLimitedSpherical(PxRigidActor* a0, const PxTransform& t0, PxRigidActor* a1, const PxTransform& t1)
 {
@@ -139,6 +139,7 @@ void createChain(const PxTransform& t, PxU32 length, const PxGeometry& g, PxReal
 		}
 	}
 }
+#pragma endregion
 
 float	cubeSize;
 
@@ -181,7 +182,6 @@ void initPhysics(bool interactive)
 	PxTransform* posss = new PxTransform(0, -cubeSize, 0); 
 	plane = CreateShape(PxBoxGeometry(cubeSize, cubeSize, cubeSize));
 	item = new RenderItem(plane, posss, { 0,1,1,0 });
-	
 	
 	skyBox = new RenderItem(CreateShape(PxBoxGeometry(cubeSize * 10, cubeSize * 10, cubeSize * 10)), posss, { 0,0,0.3,0 });
 
@@ -287,6 +287,8 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {//bodysys windup regif
 	//clean RG and SH
+
+#pragma region primal instances delete
 	item->release();
 	plane->release();
 
@@ -323,8 +325,8 @@ void cleanupPhysics(bool interactive)
 	
 	for (auto a : sphereItems)
 		a->release();
-
-
+#pragma endregion
+	
 	PX_UNUSED(interactive);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
@@ -384,7 +386,6 @@ void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 	PX_UNUSED(actor2);
 }
 
-
 int main(int, const char*const*)
 {
 #ifndef OFFLINE_EXECUTION 
@@ -400,18 +401,3 @@ int main(int, const char*const*)
 
 	return 0;
 }
-
-/*
-* NEW IDEAS
-* 
-* 
-* DOUBTS
-* 
-* TO DO
-- partículas con distinta masa
-- sólidos rígidos con distinto tamaño, masa y momento de inercia
-
-- 2 generadores de fuerzas diferentes (sin contar muelles), cada uno con su fórmula y sus restricciones de aplicación
-- gestión de creación y destrucción de instancias (las partículas no pueden estar indefinidamente en escena, tampoco pueden estar desde el principio, ha de existir un mecanismo que cree las partículas)
-- destrucción de todos los elementos al salir de la escena
-*/
