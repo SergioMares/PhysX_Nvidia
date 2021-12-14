@@ -42,6 +42,8 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback	gContactReportCallback;
 
+#pragma region Pointers and classes used
+
 ParticleGravity*		gravUp		= NULL;
 ParticleGravity*		gravDown	= NULL;
 ParticleWind*			windUp		= NULL;
@@ -64,8 +66,7 @@ PxShape					*plane		= NULL,
 						*snowSh		= NULL;
 
 
-PxRigidStatic			*ground		= NULL,
-						*landRS1	= NULL,
+PxRigidStatic			*landRS1	= NULL,
 						*landRS2	= NULL,
 						*snowRS		= NULL;
 
@@ -87,6 +88,7 @@ vector<PxRigidDynamic*> spheres;
 vector<RenderItem*> sphereItems;
 
 PxReal density = 25;
+#pragma endregion
 
 
 // spherical joint limited to an angle of at most pi/4 radians (45 degrees)
@@ -143,6 +145,11 @@ float	cubeSize;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
+	puts("use [C] to create a rigid body above the bridge");
+	puts("you can use [+/-] to increase or decrease the density of the next rigid body to create");
+	puts("with [1] yo can fire some fireworks");
+	puts("you can navigate through the scene with [A/S/D/W] and moving the coursor");
+
 	PX_UNUSED(interactive);
 
 	gFoundation = PxCreateFoundation(PX_FOUNDATION_VERSION, gAllocator, gErrorCallback);
@@ -171,18 +178,8 @@ void initPhysics(bool interactive)
 
 	cubeSize = 50;
 	
-	//ground
-	/*plane = CreateShape(PxBoxGeometry(cubeSize, cubeSize, cubeSize));
-	ground = gPhysics->createRigidStatic({ 0,-cubeSize,0 });
-	ground->attachShape(*plane);
-	gScene->addActor(*ground);
-	item = new RenderItem(plane, ground, { 0,1,1,0 });*/
-	
 	PxTransform* posss = new PxTransform(0, -cubeSize, 0); 
 	plane = CreateShape(PxBoxGeometry(cubeSize, cubeSize, cubeSize));
-	//ground = gPhysics->createRigidStatic({ 0,-cubeSize,0 });
-	//ground->attachShape(*plane);
-	//gScene->addActor(*ground);
 	item = new RenderItem(plane, posss, { 0,1,1,0 });
 	
 	
@@ -289,22 +286,37 @@ void stepPhysics(bool interactive, double t)
 // Add custom code to the begining of the function
 void cleanupPhysics(bool interactive)
 {//bodysys windup regif
-	//clean ground
-	//item->release();
-	//plane->release();
-	//ground->release();
+	//clean RG and SH
+	item->release();
+	plane->release();
 
-	delete bodySys;//listo
-	//delete windUp;
+	landSh->release();		
+	snowSh->release();
+
+	testItm->release();
+	landItm1->release();
+	landItm2->release();
+	snowItm->release();
+	skyBox->release();
+
+
 	delete regiF;
-	delete fountain;
+	delete bodySys;
 	delete gravUp;
+	delete gravDown;
+	delete Buoyancy;
+	delete windUp;
+
+	delete fountain;
+	delete fountain2;
+	delete FW1;
 
 	delete Particle_1;
 	delete Particle_2;
 	delete Particle_3;
 	delete Particle_4;
 	delete Particle_5;
+	delete Particle_6;
 
 	for (auto a : spheres)
 		a->release();
